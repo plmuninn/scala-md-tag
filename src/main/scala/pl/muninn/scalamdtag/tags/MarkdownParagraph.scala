@@ -1,0 +1,13 @@
+package pl.muninn.scalamdtag.tags
+
+case class MarkdownParagraph(tags: Iterable[MarkdownTag]) extends BlockMarkdownTag {
+  def toFragment: MarkdownFragment = MarkdownFragment(tags)
+}
+
+trait MarkdownParagraphOps {
+  implicit val renderMarkdownParagraph: Renderer[MarkdownParagraph] = {
+    case paragraph: MarkdownParagraph => '\n' + paragraph.toFragment.rendered + '\n'
+  }
+}
+
+object MarkdownParagraphOps extends MarkdownParagraphOps
