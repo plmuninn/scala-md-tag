@@ -27,7 +27,7 @@ package object tags {
 
     def ++(value: MarkdownFragment): MarkdownFragment = this match {
       case MarkdownFragment(values) => MarkdownFragment(values ++ value.tags)
-      case _ => MarkdownFragment(Iterable(this) ++ value.tags)
+      case _                        => MarkdownFragment(Iterable(this) ++ value.tags)
     }
   }
 

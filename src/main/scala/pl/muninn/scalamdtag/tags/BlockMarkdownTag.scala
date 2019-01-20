@@ -6,7 +6,6 @@ trait BlockMarkdownTag extends MarkdownTag {
   val shouldEndWithNewLine = true
 }
 
-
 case class BlockQuotes(value: MarkdownTag) extends MarkdownTag {
   val isMultiline = value.rendered.lines.length > 1
   val canBeInSameLine = isMultiline

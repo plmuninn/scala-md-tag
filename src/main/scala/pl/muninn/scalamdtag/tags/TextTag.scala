@@ -43,17 +43,18 @@ trait TextMdTagOps {
   }
 
   implicit val renderImage: Renderer[Image] = {
-    case Image(alt, link, title) => s"![${alt.getOrElse("")}]($link${title.map(value => s""" "$value"""").getOrElse("")})"
+    case Image(alt, link, title) =>
+      s"![${alt.getOrElse("")}]($link${title.map(value => s""" "$value"""").getOrElse("")})"
   }
 
   implicit def renderTextMdTag[T <: TextMarkdownTag]: Renderer[T] = {
-    case value: MarkdownText => value.render
-    case value: Italic => value.render
-    case value: Bold => value.render
+    case value: MarkdownText  => value.render
+    case value: Italic        => value.render
+    case value: Bold          => value.render
     case value: Strikethrough => value.render
-    case value: Code => value.render
-    case value: Link => value.render
-    case value: Image => value.render
+    case value: Code          => value.render
+    case value: Link          => value.render
+    case value: Image         => value.render
   }
 }
 
