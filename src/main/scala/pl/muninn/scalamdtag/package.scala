@@ -1,7 +1,6 @@
 package pl.muninn
 
 import pl.muninn.scalamdtag.tags.BaseTags.{BreakLine, HorizontalLine}
-import pl.muninn.scalamdtag.tags.TableAlignment._
 import pl.muninn.scalamdtag.tags._
 
 import scala.language.implicitConversions
@@ -71,18 +70,21 @@ package object scalamdtag {
   def table(values: Iterable[MarkdownTag], rows: Iterable[Iterable[MarkdownTag]]) =
     Table(values, rows, None)
 
-  def table(values: Iterable[MarkdownTag], rows: Iterable[Iterable[MarkdownTag]], alignment: Alignment) =
+  def table(values: Iterable[MarkdownTag], rows: Iterable[Iterable[MarkdownTag]], alignment: TableAlignment.Alignment) =
     Table(values, rows, Some(Left(alignment)))
 
-  def table(values: Iterable[MarkdownTag], rows: Iterable[Iterable[MarkdownTag]], alignments: Iterable[Alignment]) =
-    Table(values, rows, Some(Right(alignments.toList)))
+  def table(
+    values: Iterable[MarkdownTag],
+    rows: Iterable[Iterable[MarkdownTag]],
+    alignments: Iterable[TableAlignment.Alignment]
+  ) = Table(values, rows, Some(Right(alignments.toList)))
 
   def table[A <: Product, B <: Product](values: A, rows: Iterable[B]) =
     Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), None)
 
-  def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignment: Alignment) =
+  def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignment: TableAlignment.Alignment) =
     Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), Some(Left(alignment)))
 
-  def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignments: Iterable[Alignment]) =
+  def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignments: Iterable[TableAlignment.Alignment]) =
     Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), Some(Right(alignments.toList)))
 }
