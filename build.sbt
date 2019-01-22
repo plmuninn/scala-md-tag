@@ -65,7 +65,7 @@ lazy val publishSettings = Seq(
     )
   ),
   useGpg := true,
-  usePgpKeyHex("6379C1EE6695F1FD"),
+  usePgpKeyHex("59B1E98A290194294C4565B96379C1EE6695F1FD"),
   publishMavenStyle := true,
   publishArtifact in Test := false,
   publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
