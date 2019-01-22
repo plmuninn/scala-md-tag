@@ -39,9 +39,41 @@ val tests = Seq(
 
 lazy val root =
   (project in file("."))
-    .settings(defaultSettings)
+    .settings(defaultSettings: _*)
+    .settings(publishSettings: _*)
     .settings(
       name := "scala-md-tag",
       libraryDependencies ++= tests,
       sbtVersion := "1.2.3"
     )
+
+val username = "OneWebPro"
+val repo = "scala-md-tag"
+
+lazy val publishSettings = Seq(
+  homepage := Some(url(s"https://github.com/$username/$repo")),
+  licenses += "MIT" -> url(s"https://github.com/$username/$repo/blob/master/LICENSE"),
+  scmInfo := Some(ScmInfo(url(s"https://github.com/$username/$repo"), s"git@github.com:$username/$repo.git")),
+  apiURL := Some(url(s"https://$username.github.io/$repo/latest/api/")),
+  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
+  developers := List(
+    Developer(
+      id = username,
+      name = "Maciej Romanski",
+      email = "maciej.loki.romanski@gmail.com",
+      url = new URL(s"http://github.com/$username")
+    )
+  ),
+  useGpg := true,
+  usePgpKeyHex("6379C1EE6695F1FD"),
+  publishMavenStyle := true,
+  publishArtifact in Test := false,
+  publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
+  credentials ++= (for {
+    username <- sys.env.get("SONATYPE_USERNAME")
+    password <- sys.env.get("SONATYPE_PASSWORD")
+  } yield Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", username, password)).toSeq,
+  // Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
+  publishConfiguration := publishConfiguration.value.withOverwrite(true),
+  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+)
