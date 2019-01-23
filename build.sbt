@@ -69,5 +69,6 @@ lazy val publishSettings = Seq(
   publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
 //   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
   publishConfiguration := publishConfiguration.value.withOverwrite(true),
-  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
+  updateOptions := updateOptions.value.withGigahorse(false)
 )
