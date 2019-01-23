@@ -1,7 +1,5 @@
 package pl.muninn.scalamdtag.tags
 
-import pl.muninn.scalamdtag.tags.BaseTags.{BreakLine, HorizontalLine}
-
 object BaseTags {
 
   case class BreakLine() extends MarkdownTag {
@@ -10,18 +8,18 @@ object BaseTags {
     val shouldEndWithNewLine = true
   }
 
+  object BreakLine {
+    implicit val renderBreakLine: Renderer[BreakLine] = _ => "  "
+  }
+
   case class HorizontalLine() extends MarkdownTag {
     val isMultiline = false
     val canBeInSameLine = false
     val shouldEndWithNewLine = true
   }
 
+  object HorizontalLine {
+    implicit val renderHorizontalLine: Renderer[HorizontalLine] = _ => "---"
+  }
+
 }
-
-trait BaseTagsOps {
-  implicit val renderBreakLine: Renderer[BreakLine] = _ => "  "
-
-  implicit val renderHorizontalLine: Renderer[HorizontalLine] = _ => "---"
-}
-
-object BaseTagsOps extends BaseTagsOps

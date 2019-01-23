@@ -6,11 +6,8 @@ case class Heading(value: TextMarkdownTag, level: Int = 1) extends MarkdownTag {
   val shouldEndWithNewLine = true
 }
 
-trait HeadingOps {
-
+object Heading {
   implicit val renderHeading: Renderer[Heading] = {
     case Heading(value, level) => ("#" * level) + s" ${value.rendered}"
   }
 }
-
-object HeadingOps extends HeadingOps

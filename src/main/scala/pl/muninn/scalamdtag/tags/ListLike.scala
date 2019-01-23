@@ -1,16 +1,12 @@
 package pl.muninn.scalamdtag.tags
 
-import Renderer._
-
 trait ListLike extends BlockMarkdownTag {
   def values: Iterable[MarkdownTag]
 }
 
 case class UnsortedList(values: Iterable[MarkdownTag]) extends ListLike
 
-case class MarkdownList(values: Iterable[MarkdownTag]) extends ListLike
-
-trait ListLikeOps {
+object UnsortedList {
   implicit val renderUnsortedList: Renderer[UnsortedList] = {
     case UnsortedList(values) =>
       values.foldLeft("") {
@@ -18,7 +14,11 @@ trait ListLikeOps {
         case (acc, value)           => acc + s"* ${value.rendered}\n"
       }
   }
+}
 
+case class MarkdownList(values: Iterable[MarkdownTag]) extends ListLike
+
+object MarkdownList {
   implicit val renderList: Renderer[MarkdownList] = {
     case MarkdownList(values) =>
       values.zip(Stream.from(1)).foldLeft("") {
@@ -26,11 +26,4 @@ trait ListLikeOps {
         case (acc, (value, index))       => acc + s"$index. ${value.rendered}\n"
       }
   }
-
-  implicit def renderListLike[T <: ListLike]: Renderer[T] = {
-    case value: UnsortedList => value.render
-    case value: MarkdownList => value.render
-  }
 }
-
-object ListLikeOps extends ListLikeOps

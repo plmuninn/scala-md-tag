@@ -8,7 +8,7 @@ case class Table(
   alignment: Option[Either[Alignment, List[Alignment]]]
 ) extends BlockMarkdownTag
 
-trait TableOps {
+object Table {
 
   implicit private class IterableImplicit[A](iterable: Iterable[A]) {
 
@@ -103,5 +103,3 @@ trait TableOps {
   }
 
 }
-
-object TableOps extends TableOps

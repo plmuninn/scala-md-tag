@@ -2,11 +2,13 @@ package pl.muninn.scalamdtag
 
 package object tags {
 
-  import MarkdownRenderOps._
   import Renderer._
+  import MarkdownRenderOps._
 
   private[scalamdtag] trait MarkdownTag {
-    lazy val rendered: String = RendererOps(this).render
+    self =>
+
+    val rendered: String = self.render
 
     def md: String = rendered
 

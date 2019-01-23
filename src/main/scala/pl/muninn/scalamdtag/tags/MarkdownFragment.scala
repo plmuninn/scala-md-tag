@@ -6,7 +6,7 @@ case class MarkdownFragment(tags: Iterable[MarkdownTag]) extends MarkdownTag {
   val shouldEndWithNewLine = isMultiline
 }
 
-trait MarkdownFragmentOps {
+object MarkdownFragment {
 
   implicit val renderMarkdownFragment: Renderer[MarkdownFragment] = {
     case MarkdownFragment(tags) =>
@@ -41,5 +41,3 @@ trait MarkdownFragmentOps {
       }
   }
 }
-
-object MarkdownFragmentOps extends MarkdownFragmentOps

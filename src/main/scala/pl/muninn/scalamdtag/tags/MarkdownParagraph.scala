@@ -4,10 +4,8 @@ case class MarkdownParagraph(tags: Iterable[MarkdownTag]) extends BlockMarkdownT
   def toFragment: MarkdownFragment = MarkdownFragment(tags)
 }
 
-trait MarkdownParagraphOps {
+object MarkdownParagraph {
   implicit val renderMarkdownParagraph: Renderer[MarkdownParagraph] = {
     case paragraph: MarkdownParagraph => '\n' + paragraph.toFragment.rendered + '\n'
   }
 }
-
-object MarkdownParagraphOps extends MarkdownParagraphOps

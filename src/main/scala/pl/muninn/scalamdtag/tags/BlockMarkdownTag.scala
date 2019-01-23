@@ -12,17 +12,16 @@ case class BlockQuotes(value: MarkdownTag) extends MarkdownTag {
   val shouldEndWithNewLine = isMultiline
 }
 
-case class CodeBlock(language: Option[String], code: String) extends BlockMarkdownTag
-
-trait BlockMarkdownTagOps {
-
-  implicit val renderCodeBlock: Renderer[CodeBlock] = {
-    case CodeBlock(language, code) => s"""```${language.map(_ + "\n").getOrElse("\n")}\n$code\n\n```"""
-  }
-
+object BlockQuotes {
   implicit val renderBlockQuotes: Renderer[BlockQuotes] = {
     case BlockQuotes(value) => value.rendered.lines.map(line => s"> $line").mkString("\n")
   }
 }
 
-object BlockMarkdownTagOps extends BlockMarkdownTagOps
+case class CodeBlock(language: Option[String], code: String) extends BlockMarkdownTag
+
+object CodeBlock {
+  implicit val renderCodeBlock: Renderer[CodeBlock] = {
+    case CodeBlock(language, code) => s"""```${language.map(_ + "\n").getOrElse("\n")}\n$code\n\n```"""
+  }
+}
