@@ -52,6 +52,7 @@ markdown(
       )
     )
   ),
+  h1("Example:"),
   p(
     "Example of usage, you can find ", a("here.", "./src/Readme.sc")
   )

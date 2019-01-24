@@ -20,6 +20,7 @@ resolvers ++= Seq(
 )
 
 libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
+          
 
 ```
 Then you need to only add in your code:
@@ -50,5 +51,6 @@ Supported tags:
 | Ordered list         | Generate ordered list               | `ol`               |
 | Table                | Generate markdown table             | `table`            |
 
+# Example:
 
 Example of usage, you can find [here.](./src/Readme.sc)
