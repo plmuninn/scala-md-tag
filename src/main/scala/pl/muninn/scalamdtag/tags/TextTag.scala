@@ -44,7 +44,8 @@ case class Link(alt: TextMarkdownTag, link: String, title: Option[String]) exten
 
 object Link {
   implicit val renderLink: Renderer[Link] = {
-    case Link(alt, link, title) => s"[${alt.rendered}]($link${title.map(value => s""" "$value"""").getOrElse("")})"
+    case Link(alt, link, Some(title)) => s"""[${alt.rendered}]($link "$title")"""
+    case Link(alt, link, None)        => s"[${alt.rendered}]($link)"
   }
 }
 

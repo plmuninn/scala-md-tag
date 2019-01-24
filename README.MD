@@ -9,48 +9,47 @@ Library tries to guarantee:
 * Properly displayed document
 * Simple way to generate and compose markdown
 
-# Getting started:
+# Getting started
 
-Add to yours `build.sbt` :
+Add to `build.sbt` :
 ```
-
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots")
 )
 
-libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
-          
-
+libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2"
 ```
 Then you need to only add in your code:
 ```scala
-
 import pl.muninn.scalamdtag._
-
 ```
 And you are good to go.
 
 Supported tags:
 
-| Tag name             | Description / function              | Function name      |
-| -------------------- | ----------------------------------- | ------------------ |
-| Text                 | Representation of text fragment     | `text`             |
-| Horizontal line      | Generate horizontal line `---`      | `hr`               |
-| Break line           | Symbol of breaking line             | `br`               |
-| Fragment             | Represent concatenation of elements | `frag` , `::`      |
-| Header               | Header like `# Header`              | `h` `h1` `h2` etc. |
-| Italic               | Italic `_italic_`                   | `i`                |
-| Bold                 | Bold `**bold**`                     | `b`                |
-| Code                 | Cod \`some code\`                   | `code`             |
-| Paragraph / Markdown | Paragraph like html p.              | `p` , `markdown`   |
-| Image                | Generate markdown image             | `img`              |
-| Link                 | Generate markdown link              | `a`                |
-| Code block           | Generate code block                 | `codeBlock`        |
-| Unordered list       | Generate unsorted list              | `ul`               |
-| Ordered list         | Generate ordered list               | `ol`               |
-| Table                | Generate markdown table             | `table`            |
+| Tag name             | Description / function                          | Function name      |
+| -------------------- | ----------------------------------------------- | ------------------ |
+| Text                 | Representation of text fragment                 | `text`             |
+| Horizontal line      | Generate horizontal lineCode(MarkdownText(---)) | `hr`               |
+| Break line           | Symbol of breaking line                         | `br`               |
+| Fragment             | Represent concatenation of elements             | `frag` , `::`      |
+| Header               | Header like `# Header`                          | `h` `h1` `h2` etc. |
+| Italic               | Italic `_italic_`                               | `i`                |
+| Bold                 | Bold `**bold**`                                 | `b`                |
+| Code                 | Cod \`some code\`                               | `code`             |
+| Paragraph / Markdown | Paragraph like html p.                          | `p` , `markdown`   |
+| Image                | Generate markdown image                         | `img`              |
+| Link                 | Generate markdown link                          | `a`                |
+| Code block           | Generate code block                             | `codeBlock`        |
+| Unordered list       | Generate unsorted list                          | `ul`               |
+| Ordered list         | Generate ordered list                           | `ol`               |
+| Table                | Generate markdown table                         | `table`            |
 
-# Example:
+# Example
 
 Example of usage, you can find [here.](./src/Readme.sc)
+
+# What is in plan to 1.0.0
+- [ ] Create decoding markdown text to scala-md-structures
+

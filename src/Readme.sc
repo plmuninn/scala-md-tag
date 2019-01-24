@@ -4,7 +4,7 @@ markdown(
   h1("Scala markdown tags"),
   p(
     "Simple library to generate Markdown Tags - inspired by", a("scalatags", "https://github.com/lihaoyi/scalatags"), br,
-    frag("It uses plain scala (", b("no cats, shapeless etc."), ")"),
+    "It uses plain scala (" :: b("no cats, shapeless etc.") :: ")",
   ),
   h1("Overview"),
   p("Library tries to guarantee:",
@@ -14,19 +14,18 @@ markdown(
       "Simple way to generate and compose markdown"
     )
   ),
-  h1("Getting started:"),
+  h1("Getting started"),
   p(
-    frag("Add to yours", code("build.sbt"), ":"),
+    frag("Add to", code("build.sbt"), ":"),
     codeBlock(
       """resolvers ++= Seq(
         |  Resolver.sonatypeRepo("releases"),
         |  Resolver.sonatypeRepo("snapshots")
         |)
         |
-        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
-      """.stripMargin),
+        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2"""".stripMargin),
     "Then you need to only add in your code:",
-    codeBlock("scala","import pl.muninn.scalamdtag._"),
+    codeBlock("scala", "import pl.muninn.scalamdtag._"),
     "And you are good to go."
   ),
   p(
@@ -35,7 +34,7 @@ markdown(
       ("Tag name", "Description / function", "Function name"),
       List(
         ("Text", "Representation of text fragment", code("text")),
-        ("Horizontal line", "Generate horizontal line" :: code("---"), code("hr")),
+        ("Horizontal line", "Generate horizontal line" + code("---"), code("hr")),
         ("Break line", "Symbol of breaking line", code("br")),
         ("Fragment", "Represent concatenation of elements", code("frag") + "," + code("::")),
         ("Header", "Header like" :: code("# Header"), code("h") + code("h1") + code("h2") + "etc."),
@@ -52,8 +51,14 @@ markdown(
       )
     )
   ),
-  h1("Example:"),
+  h1("Example"),
   p(
     "Example of usage, you can find ", a("here.", "./src/Readme.sc")
+  ),
+  p(
+    h1("What is in plan to 1.0.0"),
+    taskList(
+      task("Create decoding markdown text to scala-md-structures"),
+    )
   )
 ).md

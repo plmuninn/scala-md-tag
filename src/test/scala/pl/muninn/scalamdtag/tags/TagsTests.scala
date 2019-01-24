@@ -1,9 +1,9 @@
 package pl.muninn.scalamdtag.tags
 
-import org.scalatest.{FlatSpec, Matchers}
 import pl.muninn.scalamdtag.tags.BaseTags.{BreakLine, HorizontalLine}
+import pl.muninn.scalamdtag.test.MarkdownSpec
 
-class TagsTests extends FlatSpec with Matchers {
+class TagsTests extends MarkdownSpec {
 
   "MdText" should "render without anything" in {
     MarkdownText("test").md shouldBe "test"
@@ -46,7 +46,7 @@ class TagsTests extends FlatSpec with Matchers {
     Image(Some("Kitten"), "https://placekitten.com/200/300", Some("awesome kitty")).md shouldBe """![Kitten](https://placekitten.com/200/300 "awesome kitty")"""
   }
 
-  "Link" should "render proper image tag" in {
+  "Link" should "render proper link tag" in {
     Link("Kitten", "https://placekitten.com/200/300", None).md shouldBe "[Kitten](https://placekitten.com/200/300)"
     Link("Kitten", "https://placekitten.com/200/300", Some("awesome kitty")).md shouldBe """[Kitten](https://placekitten.com/200/300 "awesome kitty")"""
   }
@@ -60,10 +60,14 @@ class TagsTests extends FlatSpec with Matchers {
   "CodeBlock" should "render properly" in {
     CodeBlock(Some("javascript"), "console.log(\"test\");\nlet = 1 + 1;").md shouldBe
       """```javascript
-        |
         |console.log("test");
         |let = 1 + 1;
-        |
+        |```""".stripMargin
+
+    CodeBlock(None, "console.log(\"test\");\nlet = 1 + 1;").md shouldBe
+      """```
+        |console.log("test");
+        |let = 1 + 1;
         |```""".stripMargin
   }
 

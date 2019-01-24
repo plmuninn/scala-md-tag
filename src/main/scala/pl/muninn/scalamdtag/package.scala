@@ -2,6 +2,7 @@ package pl.muninn
 
 import pl.muninn.scalamdtag.tags.BaseTags.{BreakLine, HorizontalLine}
 import pl.muninn.scalamdtag.tags._
+import pl.muninn.scalamdtag.tags.github.{Task, TaskList}
 
 import scala.language.implicitConversions
 
@@ -15,7 +16,7 @@ package object scalamdtag {
 
   def h(value: TextMarkdownTag) = Heading(value)
 
-  def h1(value: TextMarkdownTag) = h(value)
+  def h1(value: TextMarkdownTag): MarkdownTag = h(value)
 
   def h2(value: TextMarkdownTag) = Heading(value, 2)
 
@@ -87,4 +88,14 @@ package object scalamdtag {
 
   def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignments: Iterable[TableAlignment.Alignment]) =
     Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), Some(Right(alignments.toList)))
+
+  def taskList(values: Iterable[Task]) = TaskList(values)
+
+  def taskList(values: Task*): MarkdownTag = taskList(values.toIterable)
+
+  def task(value: TextMarkdownTag) = Task(selected = false, value)
+
+  def task(isSelected: Boolean, value: TextMarkdownTag) = Task(isSelected, value)
+
+  def task(value: TextMarkdownTag, isSelected: Boolean) = Task(isSelected, value)
 }
