@@ -6,15 +6,28 @@ markdown(
     "Simple library to generate Markdown Tags - inspired by", a("scalatags", "https://github.com/lihaoyi/scalatags"), br,
     frag("It uses plain scala (", b("no cats, shapeless etc."), ")"),
   ),
-  p(
-    "Library was design to help generate markdown automatically, have similar API as any html library.", br,
-    "During generation of markdown syntax, it try to minimize any problems that could end with not properly displayed document.", br,
-    "Library try to guarantee:",
+  h1("Overview"),
+  p("Library tries to guarantee:",
     ul(
       "Simple html like API",
       "Properly displayed document",
       "Simple way to generate and compose markdown"
     )
+  ),
+  h1("Getting started:"),
+  p(
+    frag("Add to yours", code("build.sbt"), ":"),
+    codeBlock(
+      """resolvers ++= Seq(
+        |  Resolver.sonatypeRepo("releases"),
+        |  Resolver.sonatypeRepo("snapshots")
+        |)
+        |
+        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
+      """.stripMargin),
+    "Then you need to only add in your code:",
+    codeBlock("scala","import pl.muninn.scalamdtag._"),
+    "And you are good to go."
   ),
   p(
     "Supported tags:",

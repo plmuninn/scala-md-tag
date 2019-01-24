@@ -2,14 +2,33 @@
 
 Simple library to generate Markdown Tags - inspired by [scalatags](https://github.com/lihaoyi/scalatags)  
 It uses plain scala ( **no cats, shapeless etc.** )
+# Overview
 
-Library was design to help generate markdown automatically, have similar API as any html library.  
-During generation of markdown syntax, it try to minimize any problems that could end with not properly displayed document.  
-Library try to guarantee:
+Library tries to guarantee:
 * Simple html like API
 * Properly displayed document
 * Simple way to generate and compose markdown
 
+# Getting started:
+
+Add to yours `build.sbt` :
+```
+
+resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
+
+libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
+
+```
+Then you need to only add in your code:
+```scala
+
+import pl.muninn.scalamdtag._
+
+```
+And you are good to go.
 
 Supported tags:
 
@@ -33,4 +52,3 @@ Supported tags:
 
 
 Example of usage, you can find [here.](./src/Readme.sc)
-
