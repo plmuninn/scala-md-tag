@@ -16,7 +16,7 @@ markdown(
   ),
   h1("Getting started"),
   p(
-    frag("Add to", code("build.sbt"), ":"),
+    frag("Add to yours", code("build.sbt"), ":"),
     codeBlock(
       """resolvers ++= Seq(
         |  Resolver.sonatypeRepo("releases"),
@@ -28,13 +28,17 @@ markdown(
     codeBlock("scala", "import pl.muninn.scalamdtag._"),
     "And you are good to go."
   ),
+  h1("Example"),
+  p(
+    "Example of usage, you can find ", a("here.", "./src/Readme.sc")
+  ),
   p(
     "Supported tags:",
     table(
       ("Tag name", "Description / function", "Function name"),
       List(
         ("Text", "Representation of text fragment", code("text")),
-        ("Horizontal line", "Generate horizontal line" + code("---"), code("hr")),
+        ("Horizontal line", "Generate horizontal line" :: code("---"), code("hr")),
         ("Break line", "Symbol of breaking line", code("br")),
         ("Fragment", "Represent concatenation of elements", code("frag") + "," + code("::")),
         ("Header", "Header like" :: code("# Header"), code("h") + code("h1") + code("h2") + "etc."),
@@ -51,9 +55,14 @@ markdown(
       )
     )
   ),
-  h1("Example"),
+  h1("Concatenation"),
   p(
-    "Example of usage, you can find ", a("here.", "./src/Readme.sc")
+    "Markdown tags provides three way of concatenation of tags / strings.", br,
+    ul(
+      frag(code("::"), "was added to fix problem with", code("+"), "during concatenation with strings. Use it if you want to concatenate string with tag"),
+      frag(code("+"), "will add tags to each other and creat new fragment"),
+      frag(code("++"), "is to merge two fragments")
+    )
   ),
   p(
     h1("What is in plan to 1.0.0"),
