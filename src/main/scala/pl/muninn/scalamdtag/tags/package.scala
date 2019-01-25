@@ -18,14 +18,21 @@ package object tags {
 
     def shouldEndWithNewLine: Boolean
 
-    def ::[T <: MarkdownTag](value: T): MarkdownTag = value + this
+    def ::[T <: MarkdownTag](value: T): MarkdownTag = value.concat(this)
 
-    def ::(value: String): MarkdownTag = MarkdownText(value) + this
+    def ::(value: String): MarkdownTag = MarkdownText(value).concat(this)
 
-    def +(value: String): MarkdownTag = this + MarkdownText(value)
+    def +(value: String): MarkdownTag = this.concat(MarkdownText(value))
 
-    def +[T <: MarkdownTag](value: T): MarkdownTag =
-      MarkdownFragment(Iterable(this) ++ Iterable(value))
+    def +[T <: MarkdownTag](value: T): MarkdownTag = this.concat(value)
+
+    def concat[T <: MarkdownTag](value: T): MarkdownTag =
+      (this, value) match {
+        case (MarkdownFragment(actualTags), MarkdownFragment(valueTags)) => MarkdownFragment(actualTags ++ valueTags)
+        case (MarkdownFragment(actualTags), v)                           => MarkdownFragment(actualTags ++ Iterable(v))
+        case (v, MarkdownFragment(valueTags))                            => MarkdownFragment(Iterable(v) ++ valueTags)
+        case (_, _)                                                      => MarkdownFragment(Iterable(this) ++ Iterable(value))
+      }
 
     def ++(value: MarkdownFragment): MarkdownFragment = this match {
       case MarkdownFragment(values) => MarkdownFragment(values ++ value.tags)

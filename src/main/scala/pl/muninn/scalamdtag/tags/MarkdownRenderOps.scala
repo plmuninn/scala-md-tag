@@ -2,6 +2,7 @@ package pl.muninn.scalamdtag.tags
 
 import Renderer._
 import pl.muninn.scalamdtag.tags.BaseTags.{BreakLine, HorizontalLine}
+import pl.muninn.scalamdtag.tags.github.TaskList
 
 trait MarkdownRenderOps {
   implicit def renderMdTag[T <: MarkdownTag]: Renderer[T] = {
@@ -22,6 +23,7 @@ trait MarkdownRenderOps {
     case value: Table             => value.render(Table.renderTable)
     case value: MarkdownParagraph => value.render(MarkdownParagraph.renderMarkdownParagraph)
     case value: MarkdownFragment  => value.render(MarkdownFragment.renderMarkdownFragment)
+    case value: TaskList          => value.render(TaskList.taskListRenderer)
   }
 }
 

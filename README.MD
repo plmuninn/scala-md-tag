@@ -9,27 +9,25 @@ Library tries to guarantee:
 * Properly displayed document
 * Simple way to generate and compose markdown
 
-# Getting started:
+# Getting started
 
 Add to yours `build.sbt` :
 ```
-
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
   Resolver.sonatypeRepo("snapshots")
 )
 
-libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
-          
-
+libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2"
 ```
 Then you need to only add in your code:
 ```scala
-
 import pl.muninn.scalamdtag._
-
 ```
 And you are good to go.
+# Example
+
+Example of usage, you can find [here.](./src/Readme.sc)
 
 Supported tags:
 
@@ -51,6 +49,15 @@ Supported tags:
 | Ordered list         | Generate ordered list               | `ol`               |
 | Table                | Generate markdown table             | `table`            |
 
-# Example:
+# Concatenation
 
-Example of usage, you can find [here.](./src/Readme.sc)
+Markdown tags provides three way of concatenation of tags / strings.  
+* `::` was added to fix problem with `+` during concatenation with strings. Use it if you want to concatenate string with tag
+* `+` will add tags to each other and creat new fragment
+* `++` is to merge two fragments
+
+
+# What is in plan to 1.0.0
+- [ ] Create decoding markdown text to scala-md-structures
+
+

@@ -4,7 +4,7 @@ markdown(
   h1("Scala markdown tags"),
   p(
     "Simple library to generate Markdown Tags - inspired by", a("scalatags", "https://github.com/lihaoyi/scalatags"), br,
-    frag("It uses plain scala (", b("no cats, shapeless etc."), ")"),
+    "It uses plain scala (" :: b("no cats, shapeless etc.") :: ")",
   ),
   h1("Overview"),
   p("Library tries to guarantee:",
@@ -14,7 +14,7 @@ markdown(
       "Simple way to generate and compose markdown"
     )
   ),
-  h1("Getting started:"),
+  h1("Getting started"),
   p(
     frag("Add to yours", code("build.sbt"), ":"),
     codeBlock(
@@ -23,11 +23,14 @@ markdown(
         |  Resolver.sonatypeRepo("snapshots")
         |)
         |
-        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.1"
-      """.stripMargin),
+        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2"""".stripMargin),
     "Then you need to only add in your code:",
-    codeBlock("scala","import pl.muninn.scalamdtag._"),
+    codeBlock("scala", "import pl.muninn.scalamdtag._"),
     "And you are good to go."
+  ),
+  h1("Example"),
+  p(
+    "Example of usage, you can find ", a("here.", "./src/Readme.sc")
   ),
   p(
     "Supported tags:",
@@ -52,8 +55,19 @@ markdown(
       )
     )
   ),
-  h1("Example:"),
+  h1("Concatenation"),
   p(
-    "Example of usage, you can find ", a("here.", "./src/Readme.sc")
+    "Markdown tags provides three way of concatenation of tags / strings.", br,
+    ul(
+      frag(code("::"), "was added to fix problem with", code("+"), "during concatenation with strings. Use it if you want to concatenate string with tag"),
+      frag(code("+"), "will add tags to each other and creat new fragment"),
+      frag(code("++"), "is to merge two fragments")
+    )
+  ),
+  p(
+    h1("What is in plan to 1.0.0"),
+    taskList(
+      task("Create decoding markdown text to scala-md-structures"),
+    )
   )
 ).md
