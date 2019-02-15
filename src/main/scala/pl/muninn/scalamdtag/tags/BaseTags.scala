@@ -4,7 +4,7 @@ object BaseTags {
 
   case class BreakLine() extends MarkdownTag {
     val isMultiline = false
-    val canBeInSameLine = false
+    val canBeInSameLine = true
     val shouldEndWithNewLine = true
   }
 

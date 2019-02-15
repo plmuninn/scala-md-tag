@@ -5,6 +5,8 @@ package object tags {
   import Renderer._
   import MarkdownRenderOps._
 
+  type Markdown = MarkdownTag
+
   private[scalamdtag] trait MarkdownTag {
     self =>
 
