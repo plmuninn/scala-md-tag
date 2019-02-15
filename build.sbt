@@ -1,6 +1,6 @@
 name := "scala-md-tag"
 
-version := "0.2"
+version := "0.2.1"
 
 scalaVersion := "2.12.6"
 
@@ -26,11 +26,12 @@ resolvers ++= Seq(
 )
 
 val defaultSettings = Seq(
-  version := "0.2",
+  version := "0.2.1",
   scalaVersion := "2.12.6",
   organization := "pl.muninn",
   scalacOptions := compilerOptions
 )
+
 val scalaTestVersion = "3.0.5"
 
 val tests = Seq(
