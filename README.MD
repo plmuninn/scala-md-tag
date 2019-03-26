@@ -18,7 +18,7 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2.1"
+libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2.2"
 ```
 Then you need to only add in your code:
 ```scala
