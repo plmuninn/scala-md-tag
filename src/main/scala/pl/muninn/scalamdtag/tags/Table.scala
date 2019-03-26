@@ -52,11 +52,15 @@ object Table {
           case (columnValue, index) =>
             val columnLength = columnValue.length
             val alignmentLength = getAlignment(index).fold(3)(minimumLengthForAlignment)
-            val rowsMaxLength = preRenderedRows
-              .foldLeft(Iterable.empty[Int]) {
-                case (acc, values: Iterable[String]) => acc ++ values.get(index).map(_.length).toIterable
+            val rowsMaxLength =
+              if (preRenderedRows.isEmpty) 0
+              else {
+                preRenderedRows
+                  .foldLeft(Iterable.empty[Int]) {
+                    case (acc, values: Iterable[String]) => acc ++ values.get(index).map(_.length).toIterable
+                  }
+                  .max
               }
-              .max
 
             index -> Set(columnLength, alignmentLength, rowsMaxLength).max
         }.toMap

@@ -113,6 +113,15 @@ class TagsTests extends MarkdownSpec {
   "Table" should "render table properly" in {
     Table(
       columns = Iterable("test", "test2", "super long column"),
+      rows = Iterable(),
+      alignment = Some(Right(List(TableAlignment.Left, TableAlignment.Center, TableAlignment.Right)))
+    ).md shouldBe
+      """| test | test2 | super long column |
+        @| :--- | :---: | ----------------: |
+        @""".stripMargin('@')
+
+    Table(
+      columns = Iterable("test", "test2", "super long column"),
       rows = Iterable(
         Iterable(1, "1", Some(Code("something"))),
         Iterable("1", "1", None)
@@ -198,5 +207,12 @@ class TagsTests extends MarkdownSpec {
         @| 1     | 1     |
         @| 1     | 1     |       |
         @""".stripMargin('@')
+  }
+
+  "Md" should "render properly with empty values" in {
+    MarkdownFragment(Iterable(
+      "test",
+      ""
+    ))
   }
 }
