@@ -1,0 +1,257 @@
+<html><head><title>scala-md-tag: Home</title><meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="author" content="Maciej Romański Muninn Software" /><meta name="description" content="Simple library to generate Markdown Tags" /><meta name="og:image" content="/scala-md-tag/img/poster.png" /><meta name="image" property="og:image" content="/scala-md-tag/img/poster.png" /><meta name="og:title" content="scala-md-tag: Home" /><meta name="title" property="og:title" content="scala-md-tag: Home" /><meta name="og:site_name" content="scala-md-tag" /><meta name="og:url" content="https://plmuninn.github.io/scala-md-tag/" /><meta name="og:type" content="website" /><meta name="og:description" content="Simple library to generate Markdown Tags" /><link rel="icon" type="image/png" href="/scala-md-tag/img/favicon.png" /><meta name="twitter:title" content="scala-md-tag: Home" /><meta name="twitter:image" content="https://plmuninn.github.io/scala-md-tag/img/poster.png" /><meta name="twitter:description" content="Simple library to generate Markdown Tags" /><meta name="twitter:card" content="summary_large_image" /><link rel="icon" type="image/png" sizes="16x16" href="/scala-md-tag/img/favicon16x16.png" /><link rel="icon" type="image/png" sizes="24x24" href="/scala-md-tag/img/favicon24x24.png" /><link rel="icon" type="image/png" sizes="32x32" href="/scala-md-tag/img/favicon32x32.png" /><link rel="icon" type="image/png" sizes="48x48" href="/scala-md-tag/img/favicon48x48.png" /><link rel="icon" type="image/png" sizes="57x57" href="/scala-md-tag/img/favicon57x57.png" /><link rel="icon" type="image/png" sizes="60x60" href="/scala-md-tag/img/favicon60x60.png" /><link rel="icon" type="image/png" sizes="64x64" href="/scala-md-tag/img/favicon64x64.png" /><link rel="icon" type="image/png" sizes="70x70" href="/scala-md-tag/img/favicon70x70.png" /><link rel="icon" type="image/png" sizes="72x72" href="/scala-md-tag/img/favicon72x72.png" /><link rel="icon" type="image/png" sizes="76x76" href="/scala-md-tag/img/favicon76x76.png" /><link rel="icon" type="image/png" sizes="96x96" href="/scala-md-tag/img/favicon96x96.png" /><link rel="icon" type="image/png" sizes="114x114" href="/scala-md-tag/img/favicon114x114.png" /><link rel="icon" type="image/png" sizes="120x120" href="/scala-md-tag/img/favicon120x120.png" /><link rel="icon" type="image/png" sizes="128x128" href="/scala-md-tag/img/favicon128x128.png" /><link rel="icon" type="image/png" sizes="144x144" href="/scala-md-tag/img/favicon144x144.png" /><link rel="icon" type="image/png" sizes="150x150" href="/scala-md-tag/img/favicon150x150.png" /><link rel="icon" type="image/png" sizes="152x152" href="/scala-md-tag/img/favicon152x152.png" /><link rel="icon" type="image/png" sizes="196x196" href="/scala-md-tag/img/favicon196x196.png" /><link rel="icon" type="image/png" sizes="310x310" href="/scala-md-tag/img/favicon310x310.png" /><link rel="icon" type="image/png" sizes="310x150" href="/scala-md-tag/img/favicon310x150.png" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /><link rel="stylesheet" href="/scala-md-tag/highlight/styles/atom-one-light.css" /><link rel="stylesheet" href="/scala-md-tag/css/style.css" /><link rel="stylesheet" href="/scala-md-tag/css/palette.css" /><link rel="stylesheet" href="/scala-md-tag/css/codemirror.css" /></head><body><header id="site-header"><div class="navbar-wrapper"><div class="container"><div class="row"><div class="col-xs-6"><a href="/scala-md-tag/" class="brand"><div class="icon-wrapper"><span>scala-md-tag</span></div></a></div><div class="col-xs-6"><nav class="text-right"><ul class=""><li><a href="https://github.com/plmuninn/scala-md-tag"><i class="fa fa-github"></i><span class="hidden-xs">GitHub</span></a></li></ul></nav></div></div></div></div><div class="jumbotron"><div class="container"><h1 class="text-center">Simple library to generate Markdown Tags</h1><h2></h2><p class="text-center"><a href="https://github.com/plmuninn/scala-md-tag" class="btn btn-outline-inverse">View on GitHub</a></p></div></div><div><ul class="horizontalNav">     <li><a class=" active " href="/scala-md-tag/">Home</a></li> </ul></div></header><main id="site-main"><section class="use"><div class="container"><div id="content"><p><a href="https://travis-ci.com/plmuninn/scala-md-tag"><img src="https://travis-ci.com/plmuninn/hocones.svg?branch=master" alt="Build Status" /></a></p>
+
+<p>Simple library to generate Markdown Tags - inspired by <a href="https://github.com/lihaoyi/scalatags">scalatags</a><br />
+It uses plain scala ( <strong>no cats, shapeless etc.</strong> )</p>
+
+<h1 id="overview">Overview</h1>
+
+<p>Library tries to guarantee:</p>
+<ul>
+  <li>Simple html like API</li>
+  <li>Properly displayed document</li>
+  <li>Simple way to generate and compose markdown</li>
+</ul>
+
+<h1 id="getting-started">Getting started</h1>
+
+<p>Add to yours <code class="highlighter-rouge">build.sbt</code> :</p>
+
+<pre><code class="language-sbtshell">resolvers ++= Seq(
+  Resolver.sonatypeRepo("releases"),
+  Resolver.sonatypeRepo("snapshots")
+)
+
+libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2.2"
+</code></pre>
+
+<p>Then you need to only add in your code:</p>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.scalamdtag._</span>
+</code></pre></div></div>
+
+<p>And you are good to go.</p>
+
+<h1 id="supported-tags">Supported tags</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag name</th>
+      <th>Description / function</th>
+      <th>Function name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Text</td>
+      <td>Representation of text fragment</td>
+      <td><code class="highlighter-rouge">text</code></td>
+    </tr>
+    <tr>
+      <td>Horizontal line</td>
+      <td>Generate horizontal line <code class="highlighter-rouge">---</code></td>
+      <td><code class="highlighter-rouge">hr</code></td>
+    </tr>
+    <tr>
+      <td>Break line</td>
+      <td>Symbol of breaking line</td>
+      <td><code class="highlighter-rouge">br</code></td>
+    </tr>
+    <tr>
+      <td>Fragment</td>
+      <td>Represent concatenation of elements</td>
+      <td><code class="highlighter-rouge">frag</code> , <code class="highlighter-rouge">::</code></td>
+    </tr>
+    <tr>
+      <td>Header</td>
+      <td>Header like <code class="highlighter-rouge"># Header</code></td>
+      <td><code class="highlighter-rouge">h</code> <code class="highlighter-rouge">h1</code> <code class="highlighter-rouge">h2</code> etc.</td>
+    </tr>
+    <tr>
+      <td>Italic</td>
+      <td>Italic <code class="highlighter-rouge">_italic_</code></td>
+      <td><code class="highlighter-rouge">i</code></td>
+    </tr>
+    <tr>
+      <td>Bold</td>
+      <td>Bold <code class="highlighter-rouge">**bold**</code></td>
+      <td><code class="highlighter-rouge">b</code></td>
+    </tr>
+    <tr>
+      <td>Code</td>
+      <td>Cod `some code`</td>
+      <td><code class="highlighter-rouge">code</code></td>
+    </tr>
+    <tr>
+      <td>Paragraph / Markdown</td>
+      <td>Paragraph like html p.</td>
+      <td><code class="highlighter-rouge">p</code> , <code class="highlighter-rouge">markdown</code></td>
+    </tr>
+    <tr>
+      <td>Image</td>
+      <td>Generate markdown image</td>
+      <td><code class="highlighter-rouge">img</code></td>
+    </tr>
+    <tr>
+      <td>Link</td>
+      <td>Generate markdown link</td>
+      <td><code class="highlighter-rouge">a</code></td>
+    </tr>
+    <tr>
+      <td>Code block</td>
+      <td>Generate code block</td>
+      <td><code class="highlighter-rouge">codeBlock</code></td>
+    </tr>
+    <tr>
+      <td>Unordered list</td>
+      <td>Generate unsorted list</td>
+      <td><code class="highlighter-rouge">ul</code></td>
+    </tr>
+    <tr>
+      <td>Ordered list</td>
+      <td>Generate ordered list</td>
+      <td><code class="highlighter-rouge">ol</code></td>
+    </tr>
+    <tr>
+      <td>Table</td>
+      <td>Generate markdown table</td>
+      <td><code class="highlighter-rouge">table</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="concatenation">Concatenation</h1>
+
+<p>Markdown tags provides three way of concatenation of tags / strings.</p>
+<ul>
+  <li><code class="highlighter-rouge">::</code> was added to fix problem with <code class="highlighter-rouge">+</code> during concatenation with strings. Use it if you want to concatenate string with tag</li>
+  <li><code class="highlighter-rouge">+</code> will add tags to each other and creat new fragment</li>
+  <li><code class="highlighter-rouge">++</code> is to merge two fragments</li>
+</ul>
+
+<h1 id="example">Example</h1>
+
+<div class="language-scala highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nn">pl.muninn.scalamdtag._</span>
+
+<span class="n">markdown</span><span class="o">(</span>
+  <span class="n">h1</span><span class="o">(</span><span class="s">"Scala markdown tags"</span><span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="s">"Simple library to generate Markdown Tags - inspired by"</span><span class="o">,</span> <span class="n">a</span><span class="o">(</span><span class="s">"scalatags"</span><span class="o">,</span> <span class="s">"https://github.com/lihaoyi/scalatags"</span><span class="o">),</span> <span class="n">br</span><span class="o">,</span>
+    <span class="s">"It uses plain scala ("</span> <span class="o">::</span> <span class="n">b</span><span class="o">(</span><span class="s">"no cats, shapeless etc."</span><span class="o">)</span> <span class="o">::</span> <span class="s">")"</span><span class="o">,</span>
+  <span class="o">),</span>
+  <span class="n">h1</span><span class="o">(</span><span class="s">"Overview"</span><span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span><span class="s">"Library tries to guarantee:"</span><span class="o">,</span>
+    <span class="n">ul</span><span class="o">(</span>
+      <span class="s">"Simple html like API"</span><span class="o">,</span>
+      <span class="s">"Properly displayed document"</span><span class="o">,</span>
+      <span class="s">"Simple way to generate and compose markdown"</span>
+    <span class="o">)</span>
+  <span class="o">),</span>
+  <span class="n">h1</span><span class="o">(</span><span class="s">"Getting started"</span><span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="n">frag</span><span class="o">(</span><span class="s">"Add to yours"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"build.sbt"</span><span class="o">),</span> <span class="s">":"</span><span class="o">),</span>
+    <span class="n">codeBlock</span><span class="o">(</span>
+      <span class="s">"""resolvers ++= Seq(
+        |  Resolver.sonatypeRepo("releases"),
+        |  Resolver.sonatypeRepo("snapshots")
+        |)
+        |
+        |libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2""""</span><span class="o">.</span><span class="n">stripMargin</span><span class="o">),</span>
+    <span class="s">"Then you need to only add in your code:"</span><span class="o">,</span>
+    <span class="n">codeBlock</span><span class="o">(</span><span class="s">"scala"</span><span class="o">,</span> <span class="s">"import pl.muninn.scalamdtag._"</span><span class="o">),</span>
+    <span class="s">"And you are good to go."</span>
+  <span class="o">),</span>
+  <span class="n">h1</span><span class="o">(</span><span class="s">"Example"</span><span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="s">"Example of usage, you can find "</span><span class="o">,</span> <span class="n">a</span><span class="o">(</span><span class="s">"here."</span><span class="o">,</span> <span class="s">"./src/Readme.sc"</span><span class="o">)</span>
+  <span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="s">"Supported tags:"</span><span class="o">,</span>
+    <span class="n">table</span><span class="o">(</span>
+      <span class="o">(</span><span class="s">"Tag name"</span><span class="o">,</span> <span class="s">"Description / function"</span><span class="o">,</span> <span class="s">"Function name"</span><span class="o">),</span>
+      <span class="nc">List</span><span class="o">(</span>
+        <span class="o">(</span><span class="s">"Text"</span><span class="o">,</span> <span class="s">"Representation of text fragment"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"text"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Horizontal line"</span><span class="o">,</span> <span class="s">"Generate horizontal line"</span> <span class="o">::</span> <span class="n">code</span><span class="o">(</span><span class="s">"---"</span><span class="o">),</span> <span class="n">code</span><span class="o">(</span><span class="s">"hr"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Break line"</span><span class="o">,</span> <span class="s">"Symbol of breaking line"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"br"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Fragment"</span><span class="o">,</span> <span class="s">"Represent concatenation of elements"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"frag"</span><span class="o">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">code</span><span class="o">(</span><span class="s">"::"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Header"</span><span class="o">,</span> <span class="s">"Header like"</span> <span class="o">::</span> <span class="n">code</span><span class="o">(</span><span class="s">"# Header"</span><span class="o">),</span> <span class="n">code</span><span class="o">(</span><span class="s">"h"</span><span class="o">)</span> <span class="o">+</span> <span class="n">code</span><span class="o">(</span><span class="s">"h1"</span><span class="o">)</span> <span class="o">+</span> <span class="n">code</span><span class="o">(</span><span class="s">"h2"</span><span class="o">)</span> <span class="o">+</span> <span class="s">"etc."</span><span class="o">),</span>
+        <span class="o">(</span><span class="s">"Italic"</span><span class="o">,</span> <span class="s">"Italic"</span> <span class="o">::</span> <span class="n">code</span><span class="o">(</span><span class="s">"_italic_"</span><span class="o">),</span> <span class="n">code</span><span class="o">(</span><span class="s">"i"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Bold"</span><span class="o">,</span> <span class="s">"Bold"</span> <span class="o">::</span> <span class="n">code</span><span class="o">(</span><span class="s">"**bold**"</span><span class="o">),</span> <span class="n">code</span><span class="o">(</span><span class="s">"b"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Code"</span><span class="o">,</span> <span class="s">"Cod \\`some code\\`"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"code"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Paragraph / Markdown"</span><span class="o">,</span> <span class="s">"Paragraph like html p."</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"p"</span><span class="o">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="n">code</span><span class="o">(</span><span class="s">"markdown"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Image"</span><span class="o">,</span> <span class="s">"Generate markdown image"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"img"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Link"</span><span class="o">,</span> <span class="s">"Generate markdown link"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"a"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Code block"</span><span class="o">,</span> <span class="s">"Generate code block"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"codeBlock"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Unordered list"</span><span class="o">,</span> <span class="s">"Generate unsorted list"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"ul"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Ordered list"</span><span class="o">,</span> <span class="s">"Generate ordered list"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"ol"</span><span class="o">)),</span>
+        <span class="o">(</span><span class="s">"Table"</span><span class="o">,</span> <span class="s">"Generate markdown table"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"table"</span><span class="o">)),</span>
+      <span class="o">)</span>
+    <span class="o">)</span>
+  <span class="o">),</span>
+  <span class="n">h1</span><span class="o">(</span><span class="s">"Concatenation"</span><span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="s">"Markdown tags provides three way of concatenation of tags / strings."</span><span class="o">,</span> <span class="n">br</span><span class="o">,</span>
+    <span class="n">ul</span><span class="o">(</span>
+      <span class="n">frag</span><span class="o">(</span><span class="n">code</span><span class="o">(</span><span class="s">"::"</span><span class="o">),</span> <span class="s">"was added to fix problem with"</span><span class="o">,</span> <span class="n">code</span><span class="o">(</span><span class="s">"+"</span><span class="o">),</span> <span class="s">"during concatenation with strings. Use it if you want to concatenate string with tag"</span><span class="o">),</span>
+      <span class="n">frag</span><span class="o">(</span><span class="n">code</span><span class="o">(</span><span class="s">"+"</span><span class="o">),</span> <span class="s">"will add tags to each other and creat new fragment"</span><span class="o">),</span>
+      <span class="n">frag</span><span class="o">(</span><span class="n">code</span><span class="o">(</span><span class="s">"++"</span><span class="o">),</span> <span class="s">"is to merge two fragments"</span><span class="o">)</span>
+    <span class="o">)</span>
+  <span class="o">),</span>
+  <span class="n">p</span><span class="o">(</span>
+    <span class="n">h1</span><span class="o">(</span><span class="s">"What is in plan to 1.0.0"</span><span class="o">),</span>
+    <span class="n">taskList</span><span class="o">(</span>
+      <span class="n">task</span><span class="o">(</span><span class="s">"Create decoding markdown text to scala-md-structures"</span><span class="o">),</span>
+    <span class="o">)</span>
+  <span class="o">)</span>
+<span class="o">).</span><span class="n">md</span>
+<span class="c1">// res0: String = """# Scala markdown tags
+// 
+// Simple library to generate Markdown Tags - inspired by [scalatags](https://github.com/lihaoyi/scalatags)  
+// It uses plain scala ( **no cats, shapeless etc.** )
+// # Overview
+// 
+// Library tries to guarantee:
+// * Simple html like API
+// * Properly displayed document
+// * Simple way to generate and compose markdown
+// 
+// # Getting started
+// 
+// Add to yours `build.sbt` :
+// ```
+// resolvers ++= Seq(
+//   Resolver.sonatypeRepo("releases"),
+//   Resolver.sonatypeRepo("snapshots")
+// )
+// 
+// libraryDependencies += "pl.muninn" %% "scala-md-tag" % "0.2"
+// ```
+// Then you need to only add in your code:
+// ```scala
+// import pl.muninn.scalamdtag._
+// ```
+// And you are good to go.
+// # Example
+// 
+// Example of usage, you can find [here.](./src/Readme.sc)
+// 
+// Supported tags:
+// 
+// | Tag name             | Description / function              | Function name      |
+// | -------------------- | ----------------------------------- | ------------------ |
+// | Text                 | Representation of text fragment     | `text`             |
+// | Horizontal line      | Generate horizontal line `---`      | `hr`               |
+// | Break line           | Symbol of breaking line             | `br`               |
+// | Fragment             | Represent concatenation of elements | `frag` , `::`      |
+// | Header               | Header like `# Header`              | `h` `h1` `h2` etc. |
+// | Italic               | Italic `_italic_`                   | `i`              ...
+</span></code></pre></div></div>
+
+<h1 id="what-is-in-plan-to-100">What is in plan to 1.0.0</h1>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Create decoding markdown text to scala-md-structures</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Handle different markdown like formats ex. Jira</li>
+</ul>
+
+</div></div></section><section class="technologies"><div class="container"><div class="row"></div></div></section></main><footer id="site-footer"><div class="container"><div class="row"><div class="col-xs-6"><p>scala-md-tag is designed and developed by <a href="https://github.com/OneWebPro/scala-md-tag" target="_blank">Maciej Romański Muninn Software</a></p></div><div class="col-xs-6"><p class="text-right"><a href="https://github.com/plmuninn/scala-md-tag"><span class="fa fa-github"></span>View on GitHub</a></p></div></div><div class="row"><div class="col-xs-6"><p>Website built with <a href="https://47deg.github.io/sbt-microsites/" target="_blank">Sbt-microsites</a> - © 2016 <a href="https://www.47deg.com/" target="_blank">47 Degrees</a></p></div></div></div></footer></body></html>
