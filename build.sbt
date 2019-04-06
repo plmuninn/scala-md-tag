@@ -1,3 +1,5 @@
+import microsites._
+
 name := "scala-md-tag"
 
 version := "0.2.2"
@@ -40,8 +42,10 @@ val tests = Seq(
 
 lazy val root =
   (project in file("."))
+    .enablePlugins(MicrositesPlugin)
     .settings(defaultSettings: _*)
     .settings(publishSettings: _*)
+    .settings(documentationSettings: _*)
     .settings(
       name := "scala-md-tag",
       libraryDependencies ++= tests,
@@ -50,6 +54,23 @@ lazy val root =
 
 val username = "OneWebPro"
 val repo = "scala-md-tag"
+
+lazy val documentationSettings = Seq (
+  mdocVariables := Map(
+    "VERSION" -> version.value
+  ),
+  micrositeName := "scala-md-tag",
+  micrositeDescription := "Simple library to generate Markdown Tags",
+  micrositeUrl := "https://plmuninn.github.io",
+  micrositeBaseUrl := "/scala-md-tag",
+  micrositeHomepage := "https://plmuninn.github.io/scala-md-tag/",
+  micrositeAuthor := "Maciej Romański Muninn Software",
+  micrositeGithubOwner := "plmuninn",
+  micrositeGithubRepo := "scala-md-tag",
+  micrositeHighlightTheme := "atom-one-light",
+  micrositePushSiteWith := GHPagesPlugin,
+  micrositeCompilingDocsTool := WithMdoc
+)
 
 lazy val publishSettings = Seq(
   homepage := Some(url(s"https://github.com/$username/$repo")),
