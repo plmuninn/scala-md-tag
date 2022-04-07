@@ -14,6 +14,8 @@ import pl.muninn.markdown.basic.span.Text
 trait Markdown:
   export MarkdownStringContext.TextOps
 
+  given Configuration = Configuration.DefaultConfiguration
+
   def md(init: BasicContextFn): MarkdownDocument =
     given fragment: MarkdownDocument   = MarkdownDocument()
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)

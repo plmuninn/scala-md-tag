@@ -1,12 +1,15 @@
 package pl.muninn
 
-import pl.muninn.markdown.Markdown.*
+import pl.muninn.markdown.Configuration
+import pl.muninn.markdown.Markdown.{*, given}
 
 @main
 def Main(args: String*): Unit =
 
+//  given Configuration = summon[Configuration].notSafeInserting.notEscapingLiterals
+
   val otherMd = md {
-    p(m"huuraay")
+    p(m"huuraay ${b("test")}")
   }
 
 //    println(printUnsafe(otherMd))
@@ -20,6 +23,12 @@ def Main(args: String*): Unit =
     br
     p {
       b(m"test4")
+      ul {
+        li("test")
+        li("test")
+        li("test")
+        li("test")
+      }
     }
     ul {
       li(m"test")
@@ -27,8 +36,10 @@ def Main(args: String*): Unit =
     }
   }
 
-  print(generateGraphUnsafe(m))
+//  print(generateGraphUnsafe(otherMd))
+//  print(generateGraphUnsafe(m))
+
 //  print(generateUnsafe(m))
-//    println(printUnsafe(otherMd))
+//  print(generateUnsafe(otherMd))
 
 end Main

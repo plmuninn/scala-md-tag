@@ -4,6 +4,7 @@ import pl.muninn.markdown.MarkdownNode.{Block, Span}
 
 import scala.collection.mutable.ArrayBuffer
 
+//TODO handle configuration
 trait MarkdownFragment[T <: MarkdownNode]:
 
   lazy val values: ArrayBuffer[MarkdownNode] = new ArrayBuffer[MarkdownNode]
@@ -24,6 +25,10 @@ trait MarkdownFragment[T <: MarkdownNode]:
   def combine(fragment: MarkdownFragment[T]): MarkdownFragment[T] =
     values ++ fragment.values
     this
+
+  def remove[A <: T](element: A): Unit =
+    val index = values.indexOf(element)
+    if index != -1 then values.remove(index)
 
 end MarkdownFragment
 

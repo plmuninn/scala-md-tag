@@ -12,6 +12,7 @@ object BasicPrinter extends MarkdownPrinter:
 
   def getBody[T <: MarkdownNode](node: T): Option[String] =
     node match {
+      case textFragment: TextFragment                   => Option(textFragment.values.map(printNode).mkString(""))
       case spanFragment: SpanFragment                   => Option(spanFragment.values.map(printNode).mkString(" "))
       case blockFragment: BlockFragment                 => Option(blockFragment.values.map(printNode).mkString(""))
       case blockWithSpanFragment: BlockWithSpanFragment => Option(blockWithSpanFragment.values.map(printNode).mkString(" "))
@@ -24,17 +25,21 @@ object BasicPrinter extends MarkdownPrinter:
       case (None, node: Text)                  => Text.print(node)
       case (None, node: BreakLine)             => BreakLine.print
       case (None, node: HorizontalLine)        => HorizontalLine.print
+      case (None, node: Code)                  => Code.print(node)
+      case (None, node: Image)                 => Image.print(node)
+      case (None, node: Link)                  => Link.print(node)
+      case (None, node: List)                  => List.print(node, printNode)
+      case (None, node: CodeBlock)             => CodeBlock.print(node)
+      case (None, node: Table)                 => Table.print(node, printNode)
+      case (Some(body), node: Blockquotes)     => Blockquotes.print(body)
       case (Some(body), node: Heading)         => Heading.print(node, body)
       case (Some(body), node: Paragraph)       => Paragraph.print(body)
       case (Some(body), node: Bold)            => Bold.print(body)
-      case (None, node: Code)                  => Code.print(node)
-      case (None, node: Image)                 => Image.print(node)
       case (Some(body), node: Italic)          => Italic.print(body)
-      case (None, node: Link)                  => Link.print(node)
       case (Some(body), node: Strikethrough)   => Strikethrough.print(body)
-      case (maybeBody, node: MarkdownDocument) => maybeBody.getOrElse("")
       case (Some(body), node: ListElement)     => body
-      case (None, node: List)                  => List.print(node, printNode)
+      case (Some(body), node: TextFragment)    => body
+      case (maybeBody, node: MarkdownDocument) => maybeBody.getOrElse("")
       case (maybeBody, node)                   => throw new RuntimeException(s"Node $node unsupported with body $maybeBody")
     }
 

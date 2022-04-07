@@ -6,24 +6,24 @@ import pl.muninn.markdown.MarkdownNode.{Block, Span}
 import pl.muninn.markdown.basic.block.*
 import pl.muninn.markdown.basic.span.*
 
-//TODO finish quote
-//TODO finish code block
-//TODO finish table
 trait ContextBasicMarkdown:
 
   export ContextBasicMarkdown.add
   export Text.text
+  export Blockquotes.blockquotes
   export BreakLine.br
   export HorizontalLine.hr
   export Heading.{h, h1, h2, h3, h4, h5, h6}
   export Paragraph.p
   export Bold.b
   export Code.code
+  export CodeBlock.codeBlock
   export Image.img
   export Italic.i
   export Link.a
   export Strikethrough.s
-  export List.{ul, ol, li}
+  export List.{ul, ol, li, add}
+//  export Table.{table, header, row, col, add}
 
 end ContextBasicMarkdown
 

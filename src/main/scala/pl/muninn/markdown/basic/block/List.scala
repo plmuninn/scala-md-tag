@@ -1,7 +1,7 @@
 package pl.muninn.markdown.basic.block
 
 import pl.muninn.markdown.MarkdownContext.{SpanContextFn, StringConversion, magneticStringToTextConversion}
-import pl.muninn.markdown.{MarkdownFragment, MarkdownNode}
+import pl.muninn.markdown.{Configuration, MarkdownFragment, MarkdownNode}
 import pl.muninn.markdown.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, SpanFragment}
 import pl.muninn.markdown.MarkdownNode.{Block, Span}
 import pl.muninn.markdown.basic.block.List.ListFragment
@@ -19,7 +19,7 @@ object List:
     init(using fragment)
     md.add(list)
 
-  def createListElementContext(element: ListElement, init: SpanContextFn)(using list: ListFragment) =
+  def createListElementContext(element: ListElement, init: SpanContextFn)(using list: ListFragment, configuration: Configuration) =
     given fragment: SpanFragment       = element
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
@@ -32,11 +32,15 @@ object List:
   enum ListType:
     case Ordered, Unordered
 
-  def ul(init: List.ListContextFn)(using md: BlockFragment) = createListContext(List(ListType.Unordered), init)
+  def ul(init: ListContextFn)(using md: BlockFragment, configuration: Configuration) = createListContext(List(ListType.Unordered), init)
 
-  def ol(init: List.ListContextFn)(using md: BlockFragment) = createListContext(List(ListType.Ordered), init)
+  def ol(init: ListContextFn)(using md: BlockFragment, configuration: Configuration) = createListContext(List(ListType.Ordered), init)
 
-  def li(init: SpanContextFn)(using list: ListFragment) = createListElementContext(ListElement(), init)
+  def add(node: ListElement)(using list: ListFragment, configuration: Configuration) = list.add(node)
+
+  def add(nodes: ListElement*)(using list: ListFragment, configuration: Configuration) = list.addMany(nodes)
+
+  def li(init: SpanContextFn)(using list: ListFragment, configuration: Configuration) = createListElementContext(ListElement(), init)
 
   def print(list: List, printBodyF: MarkdownNode => String): String =
     val bodies = list.values.map(printBodyF)

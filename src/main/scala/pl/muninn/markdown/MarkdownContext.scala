@@ -14,27 +14,25 @@ object MarkdownContext:
 
   type SpanContextFn = (SpanFragment | BlockWithSpanFragment, StringConversion) ?=> Span
 
-  def createBlockContext(value: BlockFragment, init: BasicContextFn)(using md: BlockFragment) =
+  def createBlockContext(value: BlockFragment, init: BasicContextFn)(using md: BlockFragment, configuration: Configuration) =
     given fragment: BlockFragment      = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     md.add(value)
 
-  def createSpanContext(value: SpanFragment, init: SpanContextFn)(using md: AnyMarkdownFragment) =
+  def createSpanContext(value: SpanFragment, init: SpanContextFn)(using md: AnyMarkdownFragment, configuration: Configuration) =
     given fragment: SpanFragment       = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     md.add(value)
 
-  def createSpanContextForBlock(value: BlockWithSpanFragment, init: SpanContextFn)(using md: BlockFragment) =
+  def createSpanContextForBlock(value: BlockWithSpanFragment, init: SpanContextFn)(using md: BlockFragment, configuration: Configuration) =
     given fragment: BlockWithSpanFragment = value
     given conversion: StringConversion    = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     md.add(value)
 
-  given stringToTextConverter: Conversion[String, Text] = Text(_)
-
-  def magneticStringToTextConversion(using md: AnyMarkdownFragment) = new Conversion[String, Text]():
-    override def apply(value: String): Text = md.add(stringToTextConverter(value))
+  def magneticStringToTextConversion(using md: AnyMarkdownFragment, configuration: Configuration) = new Conversion[String, Text]():
+    override def apply(value: String): Text = md.add(Text.escaped(value, configuration))
 
 end MarkdownContext

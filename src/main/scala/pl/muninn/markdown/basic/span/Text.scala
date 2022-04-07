@@ -1,5 +1,6 @@
 package pl.muninn.markdown.basic.span
 
+import pl.muninn.markdown.Configuration
 import pl.muninn.markdown.MarkdownContext.AnyMarkdownFragment
 import pl.muninn.markdown.MarkdownNode.Span
 
@@ -11,13 +12,15 @@ object Text:
 
   private val escapedCharacters: ArrayBuffer[String] = ArrayBuffer("""\""", "`", "*", "_", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!")
 
-  def apply(value: String): Text =
-    val escapedValue =
-      escapedCharacters.foldLeft(value) { case (text, character) =>
-        text.replace(character, """\""" + character)
-      }
-    new Text(escapedValue)
+  def escaped(value: String, configuration: Configuration): Text =
+    if !configuration.shouldEscapeLiterals then new Text(value)
+    else
+      val escapedValue =
+        escapedCharacters.foldLeft(value) { case (text, character) =>
+          text.replace(character, """\""" + character)
+        }
+      new Text(escapedValue)
 
-  def text(value: String)(using md: AnyMarkdownFragment) = md += Text(value)
+  def text(value: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Text.escaped(value, configuration)
 
   def print(value: Text): String = value.value
