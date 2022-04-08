@@ -1,10 +1,11 @@
-package pl.muninn.markdown.basic
+package pl.muninn.markdown.common.basic
 
-import pl.muninn.markdown.MarkdownContext.AnyMarkdownFragment
-import pl.muninn.markdown.MarkdownFragment.{BlockFragment, SpanFragment}
-import pl.muninn.markdown.MarkdownNode.{Block, Span}
-import pl.muninn.markdown.basic.block.*
-import pl.muninn.markdown.basic.span.*
+import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, SpanFragment}
+import pl.muninn.markdown.common.MarkdownNode.{Block, Span}
+import pl.muninn.markdown.common.basic.ContextBasicMarkdown
+import pl.muninn.markdown.common.basic.block.*
+import pl.muninn.markdown.common.basic.span.*
+import pl.muninn.markdown.common.MarkdownContext.AnyMarkdownFragment
 
 trait ContextBasicMarkdown:
 

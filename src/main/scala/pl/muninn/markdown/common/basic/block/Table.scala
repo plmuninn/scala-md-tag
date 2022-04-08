@@ -1,10 +1,11 @@
-package pl.muninn.markdown.basic.block
+package pl.muninn.markdown.common.basic.block
 
 import com.sun.tools.javac.api.DiagnosticFormatter.Configuration
-import pl.muninn.markdown.{MarkdownFragment, MarkdownNode}
-import pl.muninn.markdown.MarkdownFragment.SpanFragment
-import pl.muninn.markdown.MarkdownNode.Block
-import pl.muninn.markdown.basic.block.Table.{TableAlignment, TableFragment}
+import pl.muninn.markdown.common.MarkdownFragment
+import pl.muninn.markdown.common.MarkdownFragment.SpanFragment
+import pl.muninn.markdown.common.MarkdownNode.Block
+import pl.muninn.markdown.common.basic.block.Table.{TableAlignment, TableFragment}
+import pl.muninn.markdown.common.{MarkdownFragment, MarkdownNode}
 
 //TODO finish me
 case class Table(defaultAlignment: Option[TableAlignment]) extends TableFragment

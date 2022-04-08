@@ -1,7 +1,8 @@
-package pl.muninn.markdown
+package pl.muninn.markdown.common
 
-import pl.muninn.markdown.MarkdownContext.AnyMarkdownFragment
-import pl.muninn.markdown.MarkdownFragment.BlockFragment
+import pl.muninn.markdown.common.MarkdownFragment.BlockFragment
+import pl.muninn.markdown.common.MarkdownNode
+import pl.muninn.markdown.common.MarkdownContext.AnyMarkdownFragment
 
 sealed trait MarkdownNode:
 

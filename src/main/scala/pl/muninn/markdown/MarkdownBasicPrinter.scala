@@ -1,6 +1,7 @@
 package pl.muninn.markdown
 
-import pl.muninn.markdown.print.BasicPrinter
+import pl.muninn.markdown.common.MarkdownNode
+import pl.muninn.markdown.common.print.BasicPrinter
 
 trait MarkdownBasicPrinter:
   def generate[T <: MarkdownNode](markdown: T): Either[Throwable, String] = BasicPrinter.generate(markdown)

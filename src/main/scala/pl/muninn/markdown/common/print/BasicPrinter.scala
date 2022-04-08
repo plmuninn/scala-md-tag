@@ -1,10 +1,14 @@
-package pl.muninn.markdown.print
+package pl.muninn.markdown.common.print
 
-import pl.muninn.markdown.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, MarkdownDocument, SpanFragment}
-import pl.muninn.markdown.basic.block.*
-import pl.muninn.markdown.basic.block.List.ListElement
-import pl.muninn.markdown.basic.span.*
-import pl.muninn.markdown.{MarkdownFragment, MarkdownNode}
+import pl.muninn.markdown.common.MarkdownFragment
+import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, MarkdownDocument, SpanFragment}
+import pl.muninn.markdown.common.basic.block.*
+import pl.muninn.markdown.common.basic.block.List.ListElement
+import pl.muninn.markdown.common.basic.span.*
+import pl.muninn.markdown.common.MarkdownNode
+import pl.muninn.markdown.common.basic.block
+import pl.muninn.markdown.common.basic.block.{Blockquotes, BreakLine, CodeBlock, Heading, HorizontalLine, Paragraph, Table}
+import pl.muninn.markdown.common.basic.span.{Bold, Code, Image, Italic, Link, Strikethrough, Text, TextFragment}
 
 import scala.util.Try
 
@@ -28,7 +32,7 @@ object BasicPrinter extends MarkdownPrinter:
       case (None, node: Code)                  => Code.print(node)
       case (None, node: Image)                 => Image.print(node)
       case (None, node: Link)                  => Link.print(node)
-      case (None, node: List)                  => List.print(node, printNode)
+      case (None, node: block.List)            => List.print(node, printNode)
       case (None, node: CodeBlock)             => CodeBlock.print(node)
       case (None, node: Table)                 => Table.print(node, printNode)
       case (Some(body), node: Blockquotes)     => Blockquotes.print(body)

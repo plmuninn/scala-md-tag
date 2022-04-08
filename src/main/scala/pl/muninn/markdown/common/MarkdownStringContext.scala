@@ -1,8 +1,10 @@
-package pl.muninn.markdown
+package pl.muninn.markdown.common
 
-import pl.muninn.markdown.MarkdownContext.AnyMarkdownFragment
-import pl.muninn.markdown.MarkdownNode.{Block, Span}
-import pl.muninn.markdown.basic.span.{Text, TextFragment}
+import pl.muninn.markdown.common.MarkdownNode.{Block, Span}
+import pl.muninn.markdown.common.basic.span.TextFragment
+import pl.muninn.markdown.common.MarkdownContext.AnyMarkdownFragment
+import pl.muninn.markdown.common.basic.span.Text
+import pl.muninn.markdown.common.{Configuration, MarkdownNode}
 
 object MarkdownStringContext:
 

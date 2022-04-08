@@ -1,6 +1,7 @@
-package pl.muninn.markdown.print
+package pl.muninn.markdown.common.print
 
-import pl.muninn.markdown.{MarkdownFragment, MarkdownNode}
+import pl.muninn.markdown.common.MarkdownFragment
+import pl.muninn.markdown.common.{MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Try

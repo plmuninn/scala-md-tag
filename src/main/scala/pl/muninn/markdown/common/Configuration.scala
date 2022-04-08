@@ -1,4 +1,6 @@
-package pl.muninn.markdown
+package pl.muninn.markdown.common
+
+import pl.muninn.markdown.common.Configuration
 
 trait Configuration:
   val shouldEscapeLiterals: Boolean = true

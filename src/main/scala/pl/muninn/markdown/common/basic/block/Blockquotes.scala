@@ -1,8 +1,8 @@
-package pl.muninn.markdown.basic.block
+package pl.muninn.markdown.common.basic.block
 
-import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.MarkdownContext.{BasicContextFn, createBlockPartialContext}
-import pl.muninn.markdown.MarkdownFragment.BlockFragment
+import pl.muninn.markdown.common.MarkdownFragment.BlockFragment
+import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.MarkdownContext.{BasicContextFn, createBlockPartialContext}
 
 import java.util.Arrays
 import scala.io.Source

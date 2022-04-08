@@ -1,7 +1,8 @@
-package pl.muninn.markdown.basic
+package pl.muninn.markdown.common.basic
 
-import pl.muninn.markdown.basic.block.*
-import pl.muninn.markdown.basic.span.*
+import pl.muninn.markdown.common.basic.PartialBasicMarkdown
+import pl.muninn.markdown.common.basic.block.*
+import pl.muninn.markdown.common.basic.span.*
 
 trait PartialBasicMarkdown:
 

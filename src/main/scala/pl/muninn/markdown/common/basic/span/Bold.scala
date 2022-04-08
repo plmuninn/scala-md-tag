@@ -1,8 +1,8 @@
-package pl.muninn.markdown.basic.span
+package pl.muninn.markdown.common.basic.span
 
-import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.MarkdownContext.{AnyMarkdownFragment, SpanContextFn, createSpanPartialContext}
-import pl.muninn.markdown.MarkdownFragment.SpanFragment
+import pl.muninn.markdown.common.MarkdownFragment.SpanFragment
+import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.MarkdownContext.{AnyMarkdownFragment, SpanContextFn, createSpanPartialContext}
 
 class Bold extends SpanFragment
 

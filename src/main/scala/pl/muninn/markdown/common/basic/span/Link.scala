@@ -1,8 +1,8 @@
-package pl.muninn.markdown.basic.span
+package pl.muninn.markdown.common.basic.span
 
-import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.MarkdownContext.AnyMarkdownFragment
-import pl.muninn.markdown.MarkdownNode.Span
+import pl.muninn.markdown.common.MarkdownNode.Span
+import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.MarkdownContext.AnyMarkdownFragment
 
 case class Link(alt: Text, link: Text, title: Option[Text]) extends Span
 

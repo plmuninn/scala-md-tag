@@ -1,9 +1,9 @@
-package pl.muninn.markdown.basic.block
+package pl.muninn.markdown.common.basic.block
 
-import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.MarkdownContext.{SpanContextFn, createSpanPartialContextForBlock}
-import pl.muninn.markdown.MarkdownFragment.{BlockFragment, BlockWithSpanFragment}
-import pl.muninn.markdown.MarkdownNode.Block
+import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, BlockWithSpanFragment}
+import pl.muninn.markdown.common.MarkdownNode.Block
+import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, createSpanPartialContextForBlock}
 
 case class Heading(level: Int) extends BlockWithSpanFragment
 

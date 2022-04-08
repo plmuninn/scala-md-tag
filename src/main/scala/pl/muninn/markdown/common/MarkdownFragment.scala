@@ -1,6 +1,7 @@
-package pl.muninn.markdown
+package pl.muninn.markdown.common
 
-import pl.muninn.markdown.MarkdownNode.{Block, Span}
+import pl.muninn.markdown.common.MarkdownNode.{Block, Span}
+import pl.muninn.markdown.common.{MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 

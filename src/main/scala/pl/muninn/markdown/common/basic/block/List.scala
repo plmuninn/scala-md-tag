@@ -1,10 +1,11 @@
-package pl.muninn.markdown.basic.block
+package pl.muninn.markdown.common.basic.block
 
-import pl.muninn.markdown.MarkdownContext.{SpanContextFn, StringConversion, createSpanPartialContext}
-import pl.muninn.markdown.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, SpanFragment}
-import pl.muninn.markdown.MarkdownNode.{Block, Span}
-import pl.muninn.markdown.basic.block.List.ListFragment
-import pl.muninn.markdown.{Configuration, MarkdownFragment, MarkdownNode}
+import pl.muninn.markdown.common.MarkdownFragment
+import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, SpanFragment}
+import pl.muninn.markdown.common.MarkdownNode.{Block, Span}
+import pl.muninn.markdown.common.basic.block.List.ListFragment
+import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, StringConversion, createSpanPartialContext}
+import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 

@@ -1,8 +1,8 @@
 package pl.muninn
 
-import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.Configuration.DefaultConfiguration
+import pl.muninn.markdown.common.Configuration.DefaultConfiguration
 import pl.muninn.markdown.Markdown.{*, given}
+import pl.muninn.markdown.common.Configuration
 
 @main
 def Main(args: String*): Unit =

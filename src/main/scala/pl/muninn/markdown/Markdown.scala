@@ -1,15 +1,17 @@
 package pl.muninn.markdown
 
-import pl.muninn.markdown.MarkdownContext.{BasicContextFn, StringConversion, magneticStringToTextConversion}
-import pl.muninn.markdown.MarkdownFragment.BlockFragment
-import pl.muninn.markdown.MarkdownFragment.MarkdownDocument
-import pl.muninn.markdown.MarkdownNode.Span
-import pl.muninn.markdown.basic.{ContextBasicMarkdown, PartialBasicMarkdown}
-import pl.muninn.markdown.basic.block.Paragraph
-import pl.muninn.markdown.basic.span.Text
+import pl.muninn.markdown.common.MarkdownContext.{BasicContextFn, StringConversion, magneticStringToTextConversion}
+import pl.muninn.markdown.common.MarkdownFragment.BlockFragment
+import pl.muninn.markdown.common.MarkdownFragment.MarkdownDocument
+import pl.muninn.markdown.common.MarkdownNode.Span
+import pl.muninn.markdown.common.basic.PartialBasicMarkdown
+import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.basic.block.Paragraph
+import pl.muninn.markdown.common.basic.span.Text
+import pl.muninn.markdown.common.basic.{ContextBasicMarkdown, PartialBasicMarkdown}
 
 trait Markdown:
-  export MarkdownStringContext.TextOps
+  export pl.muninn.markdown.common.MarkdownStringContext.TextOps
 
   given Configuration = Configuration.DefaultConfiguration
 

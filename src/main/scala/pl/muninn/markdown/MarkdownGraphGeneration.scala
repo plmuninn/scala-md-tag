@@ -1,6 +1,7 @@
 package pl.muninn.markdown
 
-import pl.muninn.markdown.print.GraphPrinter
+import pl.muninn.markdown.common.MarkdownNode
+import pl.muninn.markdown.common.print.GraphPrinter
 
 import scala.reflect.ClassTag
 
