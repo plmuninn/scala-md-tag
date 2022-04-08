@@ -41,7 +41,7 @@ object MarkdownStringContext:
         md.add(textFragment)
     end m
 
-    def mraw(args: Any*)(using md: AnyMarkdownFragment): Span =
+    def mraw(args: Any*)(using md: AnyMarkdownFragment, configuration: Configuration): Span =
       val containsMarkdown = args.exists {
         case _: MarkdownNode => true
         case _               => false

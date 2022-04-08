@@ -1,5 +1,6 @@
 package pl.muninn.markdown.common.basic
 
+import pl.muninn.markdown.common.Configuration
 import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, SpanFragment}
 import pl.muninn.markdown.common.MarkdownNode.{Block, Span}
 import pl.muninn.markdown.common.basic.ContextBasicMarkdown
@@ -30,10 +31,10 @@ end ContextBasicMarkdown
 
 object ContextBasicMarkdown:
 
-  def add[T <: Span](node: T)(using md: AnyMarkdownFragment) = md += node
+  def add[T <: Span](node: T)(using md: AnyMarkdownFragment, configuration: Configuration) = md += node
 
-  def add[T <: Span](nodes: T*)(using md: AnyMarkdownFragment) = md.addMany(nodes)
+  def add[T <: Span](nodes: T*)(using md: AnyMarkdownFragment, configuration: Configuration) = md.addMany(nodes)
 
-  def add[T <: Block](node: T)(using md: BlockFragment) = md += node
+  def add[T <: Block](node: T)(using md: BlockFragment, configuration: Configuration) = md += node
 
-  def add[T <: Block](nodes: T*)(using md: BlockFragment) = md.addMany(nodes)
+  def add[T <: Block](nodes: T*)(using md: BlockFragment, configuration: Configuration) = md.addMany(nodes)

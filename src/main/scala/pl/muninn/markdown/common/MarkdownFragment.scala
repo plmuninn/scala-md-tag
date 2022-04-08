@@ -10,20 +10,20 @@ trait MarkdownFragment[T <: MarkdownNode]:
 
   lazy val values: ArrayBuffer[MarkdownNode] = new ArrayBuffer[MarkdownNode]
 
-  infix def +=[A <: T](element: A): A = add(element)
+  infix def +=[A <: T](element: A)(using configuration: Configuration): A = add(element)
 
-  infix def ++[A <: T](elements: A*): Unit = addMany(elements)
+  infix def ++[A <: T](elements: A*)(using configuration: Configuration): Unit = addMany(elements)
 
-  infix def ++=(fragment: MarkdownFragment[T]): Unit = combine(fragment)
+  infix def ++=(fragment: MarkdownFragment[T])(using configuration: Configuration): Unit = combine(fragment)
 
-  def add[A <: T](element: A): A =
+  def add[A <: T](element: A)(using configuration: Configuration): A =
     values += element
     element
 
-  def addMany(elements: Iterable[T]): Unit =
+  def addMany(elements: Iterable[T])(using configuration: Configuration): Unit =
     values ++ elements
 
-  def combine(fragment: MarkdownFragment[T]): MarkdownFragment[T] =
+  def combine(fragment: MarkdownFragment[T])(using configuration: Configuration): MarkdownFragment[T] =
     values ++ fragment.values
     this
 
