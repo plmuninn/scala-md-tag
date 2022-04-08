@@ -1,10 +1,10 @@
 package pl.muninn.markdown.basic.block
 
-import pl.muninn.markdown.MarkdownContext.{SpanContextFn, StringConversion, magneticStringToTextConversion}
-import pl.muninn.markdown.{Configuration, MarkdownFragment, MarkdownNode}
+import pl.muninn.markdown.MarkdownContext.{SpanContextFn, StringConversion, createSpanPartialContext}
 import pl.muninn.markdown.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, SpanFragment}
 import pl.muninn.markdown.MarkdownNode.{Block, Span}
 import pl.muninn.markdown.basic.block.List.ListFragment
+import pl.muninn.markdown.{Configuration, MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -20,12 +20,6 @@ object List:
     init(using fragment)
     list
 
-  def createListElementPartialContext(element: ListElement, init: SpanContextFn)(using configuration: Configuration): ListElement =
-    given fragment: SpanFragment       = element
-    given conversion: StringConversion = magneticStringToTextConversion(using fragment)
-    init(using fragment, conversion)
-    element
-
   trait ListFragment extends MarkdownFragment[ListElement] with Block
 
   class ListElement extends SpanFragment
@@ -38,7 +32,7 @@ object List:
 
     def ol(init: ListContextFn)(using configuration: Configuration): List = createListPartialContext(List(ListType.Ordered), init)
 
-    def li(init: SpanContextFn)(using list: ListFragment, configuration: Configuration) = createListElementPartialContext(ListElement(), init)
+    def li(init: SpanContextFn)(using list: ListFragment, configuration: Configuration): ListElement = createSpanPartialContext(ListElement(), init)
 
   end Partial
 
