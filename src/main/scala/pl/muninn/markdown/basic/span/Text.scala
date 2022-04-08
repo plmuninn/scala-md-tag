@@ -21,6 +21,9 @@ object Text:
         }
       new Text(escapedValue)
 
-  def text(value: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Text.escaped(value, configuration)
+  object Partial:
+    def text(value: String)(using configuration: Configuration): Text = Text.escaped(value, configuration)
+
+  def text(value: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Partial.text(value)
 
   def print(value: Text): String = value.value

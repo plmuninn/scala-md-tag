@@ -7,6 +7,9 @@ import pl.muninn.markdown.MarkdownNode.Span
 case class Code(text: Text) extends Span
 
 object Code:
-  def code(value: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Code(Text(value))
+  object Partial:
+    def code(value: String)(using configuration: Configuration): Code = Code(Text(value))
+
+  def code(value: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Partial.code(value)
 
   def print(node: Code): String = s"`${node.text.value}`"

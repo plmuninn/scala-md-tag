@@ -14,25 +14,29 @@ object MarkdownContext:
 
   type SpanContextFn = (SpanFragment | BlockWithSpanFragment, StringConversion) ?=> Span
 
-  def createBlockContext(value: BlockFragment, init: BasicContextFn)(using md: BlockFragment, configuration: Configuration) =
+  def createBlockPartialContext[T <: BlockFragment](value: T, init: BasicContextFn)(using configuration: Configuration): T =
     given fragment: BlockFragment      = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
-    md.add(value)
+    value
+  end createBlockPartialContext
 
-  def createSpanContext(value: SpanFragment, init: SpanContextFn)(using md: AnyMarkdownFragment, configuration: Configuration) =
+  def createSpanPartialContext[T <: SpanFragment](value: T, init: SpanContextFn)(using configuration: Configuration): T =
     given fragment: SpanFragment       = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
-    md.add(value)
+    value
+  end createSpanPartialContext
 
-  def createSpanContextForBlock(value: BlockWithSpanFragment, init: SpanContextFn)(using md: BlockFragment, configuration: Configuration) =
+  def createSpanPartialContextForBlock[T <: BlockWithSpanFragment](value: T, init: SpanContextFn)(using configuration: Configuration): T =
     given fragment: BlockWithSpanFragment = value
     given conversion: StringConversion    = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
-    md.add(value)
+    value
+  end createSpanPartialContextForBlock
 
-  def magneticStringToTextConversion(using md: AnyMarkdownFragment, configuration: Configuration) = new Conversion[String, Text]():
-    override def apply(value: String): Text = md.add(Text.escaped(value, configuration))
+  def magneticStringToTextConversion(using md: AnyMarkdownFragment, configuration: Configuration): Conversion[String, Text] =
+    new Conversion[String, Text]():
+      override def apply(value: String): Text = md.add(Text.escaped(value, configuration))
 
 end MarkdownContext

@@ -7,6 +7,10 @@ import pl.muninn.markdown.MarkdownNode.Block
 class HorizontalLine extends Block
 
 object HorizontalLine:
-  def hr(using md: BlockFragment, configuration: Configuration) = md += HorizontalLine()
+
+  object Partial:
+    def hr(using configuration: Configuration): HorizontalLine = HorizontalLine()
+
+  def hr(using md: BlockFragment, configuration: Configuration) = md += Partial.hr
 
   def print: String = "---\n"

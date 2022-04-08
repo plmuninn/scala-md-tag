@@ -1,7 +1,7 @@
 package pl.muninn.markdown.basic.block
 
 import pl.muninn.markdown.Configuration
-import pl.muninn.markdown.MarkdownContext.{BasicContextFn, createBlockContext}
+import pl.muninn.markdown.MarkdownContext.{BasicContextFn, createBlockPartialContext}
 import pl.muninn.markdown.MarkdownFragment.BlockFragment
 
 import java.util.Arrays
@@ -12,7 +12,10 @@ class Blockquotes extends BlockFragment
 
 object Blockquotes:
 
-  def blockquotes(init: BasicContextFn)(using md: BlockFragment, configuration: Configuration) = createBlockContext(Blockquotes(), init)
+  object Partial:
+    def blockquotes(init: BasicContextFn)(using configuration: Configuration): Blockquotes = createBlockPartialContext(Blockquotes(), init)
+
+  def blockquotes(init: BasicContextFn)(using md: BlockFragment, configuration: Configuration) = md += Partial.blockquotes(init)
 
   def print(body: String): String =
     Source

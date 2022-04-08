@@ -8,6 +8,9 @@ class BreakLine extends Block
 
 object BreakLine:
 
-  def br(using md: BlockFragment, configuration: Configuration) = md += BreakLine()
+  object Partial:
+    def br(using configuration: Configuration): BreakLine = BreakLine()
+
+  def br(using md: BlockFragment, configuration: Configuration) = md += Partial.br
 
   def print: String = "  \n"
