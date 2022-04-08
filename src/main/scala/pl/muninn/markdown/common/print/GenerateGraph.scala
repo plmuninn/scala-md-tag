@@ -1,11 +1,11 @@
-package pl.muninn.markdown
+package pl.muninn.markdown.common.print
 
 import pl.muninn.markdown.common.MarkdownNode
 import pl.muninn.markdown.common.print.GraphPrinter
 
 import scala.reflect.ClassTag
 
-trait MarkdownGraphGeneration:
+trait GenerateGraph:
 
   def generateGraph[T <: MarkdownNode](markdown: T): Either[Throwable, String] = GraphPrinter.generate(markdown)
 

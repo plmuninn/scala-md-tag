@@ -28,7 +28,7 @@ trait MarkdownFragment[T <: MarkdownNode]:
     this
 
   def remove[A <: T](element: A): Unit =
-    val index = values.indexOf(element)
+    val index = values.indexOf(element, 0)
     if index != -1 then values.remove(index)
 
 end MarkdownFragment

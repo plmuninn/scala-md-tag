@@ -5,19 +5,21 @@ import pl.muninn.markdown.common.MarkdownFragment.BlockFragment
 import pl.muninn.markdown.common.MarkdownFragment.MarkdownDocument
 import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.PartialBasicMarkdown
-import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.{Configuration, MarkdownNode}
 import pl.muninn.markdown.common.basic.block.Paragraph
 import pl.muninn.markdown.common.basic.span.Text
 import pl.muninn.markdown.common.basic.{ContextBasicMarkdown, PartialBasicMarkdown}
+import pl.muninn.markdown.common.print.{BasicPrinter, GenerateGraph, GenerateMarkdown}
 
-trait Markdown:
+trait Markdown extends GenerateGraph with GenerateMarkdown:
+
   export pl.muninn.markdown.common.MarkdownStringContext.TextOps
 
   given Configuration = Configuration.DefaultConfiguration
 
-  val partial: PartialBasicMarkdown = PartialBasicMarkdown
+  override def generate[T <: MarkdownNode](markdown: T): Either[Throwable, String] = BasicPrinter.generate(markdown)
 
-  def md(init: BasicContextFn): MarkdownDocument =
+  final def md(init: BasicContextFn): MarkdownDocument =
     given fragment: MarkdownDocument   = MarkdownDocument()
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment)
@@ -25,4 +27,5 @@ trait Markdown:
 
 end Markdown
 
-object Markdown extends Markdown with ContextBasicMarkdown with MarkdownGraphGeneration with MarkdownBasicPrinter
+object Markdown extends Markdown with ContextBasicMarkdown:
+  val partial: PartialBasicMarkdown = PartialBasicMarkdown
