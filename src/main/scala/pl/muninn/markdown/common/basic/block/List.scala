@@ -56,8 +56,8 @@ object List:
     given nextListLevel: ListLevel = level.copy(value = level.value + 1)
     init(using fragment, nextListLevel)
 
-  // TODO handle generating string with number on start of list
-  // (\d+)(\.)
+  private val NUMBER_REGEX = raw"^(\d+)(\.)".r
+
   def print(list: List, printBodyF: MarkdownNode => String): String =
     val listType                                          = list.listType
     val listElements: ArrayBuffer[ListElement]            = list.values.collect({ case element: ListElement => element })
@@ -73,8 +73,9 @@ object List:
         case ListType.Unordered => s"$index."
       }
       index += 1
-      val indent = if level.value == 0 then "" else " " * 3 * level.value
-      s"$indent$prefix $body"
+      val indent   = if level.value == 0 then "" else " " * 3 * level.value
+      val safeBody = body.replaceFirst(NUMBER_REGEX.toString(), """$1\\.""")
+      s"$indent$prefix $safeBody"
     }
 
     results.mkString("\n")
