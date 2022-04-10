@@ -5,7 +5,6 @@ import pl.muninn.markdown.common.{MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 
-//TODO handle configuration
 trait MarkdownFragment[T <: MarkdownNode]:
 
   lazy val values: ArrayBuffer[MarkdownNode] = new ArrayBuffer[MarkdownNode]
@@ -17,14 +16,14 @@ trait MarkdownFragment[T <: MarkdownNode]:
   infix def ++=(fragment: MarkdownFragment[T])(using configuration: Configuration): Unit = combine(fragment)
 
   def add[A <: T](element: A)(using configuration: Configuration): A =
-    values += element
+    if configuration.safeInserting then MarkdownSafeInserting.safeInsert(element, values) else values += element
     element
 
   def addMany(elements: Iterable[T])(using configuration: Configuration): Unit =
-    values ++ elements
+    if configuration.safeInserting then MarkdownSafeInserting.safeInsertMany(elements, values) else values ++ elements
 
   def combine(fragment: MarkdownFragment[T])(using configuration: Configuration): MarkdownFragment[T] =
-    values ++ fragment.values
+    if configuration.safeInserting then MarkdownSafeInserting.safeInsertMany(fragment.values, values) else values ++ fragment.values
     this
 
   def remove[A <: T](element: A): Unit =

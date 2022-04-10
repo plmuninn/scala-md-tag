@@ -9,19 +9,23 @@ def Main(args: String*): Unit =
 
   given Configuration = DefaultConfiguration.notSafeInserting.notEscapingLiterals
 
-  val title = partial.h1(m"test")
-
-  val otherMd = md {
-    add(title)
-    p(m"huuraay ${b("test")}")
-  }
-
-//    println(printUnsafe(otherMd))
-
+//  val title = partial.h1(m"test")
+//
+//  val otherMd = md {
+//    add(title)
+//    p(m"huuraay ${b("test")}")
+//    p("test")
+//  }
+//
+////    println(printUnsafe(otherMd))
+//
   val m = md {
     val title = h1(i(m"test")).partial
     add(title)
     hr
+    b {
+      "test"
+    }
     p(m"test1")
     p(m"test2")
     b("test3")
@@ -32,7 +36,12 @@ def Main(args: String*): Unit =
         li("test")
         li("test")
         li("test")
-        li("test")
+//        li {
+//          m"test"
+//          ul {
+//            li("test")
+//          }
+//        }
       }
     }
     ul {
@@ -41,10 +50,27 @@ def Main(args: String*): Unit =
     }
   }
 
-  print(generateGraphUnsafe(otherMd))
-//  print(generateGraphUnsafe(m))
+//  print(generateGraphUnsafe(otherMd))
+  print(generateGraphUnsafe(m))
 
 //  print(generateUnsafe(m))
 //  print(generateUnsafe(otherMd))
+
+//  val listMd = md {
+//    p {
+//      b(m"test4")
+//      ul {
+//        li("test")
+//        li("test")
+//        ul {
+//          li("test")
+//          li("test")
+//          li("test")
+//        }
+//      }
+//    }
+//  }
+
+//  print(generateGraphUnsafe(listMd))
 
 end Main

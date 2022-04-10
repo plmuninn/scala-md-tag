@@ -14,13 +14,13 @@ object Table:
 
   trait TableFragment extends MarkdownFragment[Header | Row] with Block
 
+  sealed trait ColumnFragment extends SpanFragment
+
   class Header extends ColumnFragment
 
   class Row extends ColumnFragment
 
-  class Column(alignment: Option[TableAlignment]) extends SpanFragment
-
-  trait ColumnFragment extends SpanFragment
+  class Column(alignment: Option[TableAlignment]) extends ColumnFragment
 
 //  def table(defaultAlignment:TableAlignment)
 //

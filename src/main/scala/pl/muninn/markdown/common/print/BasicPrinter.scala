@@ -27,7 +27,7 @@ object BasicPrinter extends MarkdownPrinter:
     val bodyOpt: Option[String] = getBody(node)
     (bodyOpt, node) match {
       case (None, node: Text)                  => Text.print(node)
-      case (None, node: BreakLine)             => BreakLine.print
+      case (None, node: BreakLine)             => BreakLine.print(node)
       case (None, node: HorizontalLine)        => HorizontalLine.print
       case (None, node: Code)                  => Code.print(node)
       case (None, node: Image)                 => Image.print(node)

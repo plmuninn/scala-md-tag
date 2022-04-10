@@ -10,6 +10,7 @@ import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 import scala.collection.mutable.ArrayBuffer
 
 //TODO add levels
+//TODO handle generating string with number on start of list
 case class List(listType: List.ListType) extends ListFragment
 
 object List:
