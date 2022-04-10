@@ -7,15 +7,14 @@ import pl.muninn.markdown.common.basic.block.List.ListFragment
 import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, StringConversion, createSpanPartialContext}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
+import scala.collection.immutable.ListMap
 import scala.collection.mutable.ArrayBuffer
 
 case class List(listType: List.ListType) extends ListFragment
 
 object List:
 
-  trait ListFragment extends MarkdownFragment[ListElement] with Block {
-    def listType: ListType
-  }
+  trait ListFragment extends MarkdownFragment[ListElement] with Block
 
   case class ListElement(level: ListLevel) extends SpanFragment
 
@@ -58,16 +57,25 @@ object List:
     init(using fragment, nextListLevel)
 
   // TODO handle generating string with number on start of list
-  // TODO handle rendering levels
+  // (\d+)(\.)
   def print(list: List, printBodyF: MarkdownNode => String): String =
-    val bodies = list.values.map(printBodyF)
-    bodies.zipWithIndex
-      .map { case (body, index) =>
-        val prefix = list.listType match {
-          case ListType.Ordered   => "*"
-          case ListType.Unordered => s"$index"
-        }
+    val listType                                          = list.listType
+    val listElements: ArrayBuffer[ListElement]            = list.values.collect({ case element: ListElement => element })
+    val bodiesWithLevel: ArrayBuffer[(ListLevel, String)] = listElements.map(element => (element.level, printBodyF(element)))
+    var index: Int                                        = 1
+    var previousLevel: ListLevel                          = ListLevel(0)
+    val results = bodiesWithLevel.map { case (level, body) =>
+      if level.value != previousLevel.value then index = 1
+      previousLevel = level
 
-        s"$prefix $body"
+      val prefix = listType match {
+        case ListType.Ordered   => "*"
+        case ListType.Unordered => s"$index."
       }
-      .mkString("\n")
+      index += 1
+      val indent = if level.value == 0 then "" else " " * 3 * level.value
+      s"$indent$prefix $body"
+    }
+
+    results.mkString("\n")
+  end print
