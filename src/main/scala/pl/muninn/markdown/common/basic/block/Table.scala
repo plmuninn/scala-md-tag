@@ -2,7 +2,7 @@ package pl.muninn.markdown.common.basic.block
 
 import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, createSpanPartialContext}
 import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, SpanFragment}
-import pl.muninn.markdown.common.MarkdownNode.Block
+import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.block.Table.{TableAlignment, TableFragment}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
@@ -11,15 +11,15 @@ case class Table(defaultAlignment: Option[TableAlignment], strictPrinting: Boole
 object Table:
   extension (table: Table) def withAlignment(alignment: TableAlignment) = table.copy(defaultAlignment = Some(alignment))
 
-  trait TableFragment extends MarkdownFragment[TableElement] with Block
+  trait TableFragment extends MarkdownFragment[TableElement] with Span
 
   type TableElement = Headers | Row
 
-  class Headers extends MarkdownFragment[Header] with Block
+  class Headers extends MarkdownFragment[Header] with Span
 
   class Header(alignment: Option[TableAlignment]) extends SpanFragment
 
-  class Row extends MarkdownFragment[Column] with Block
+  class Row extends MarkdownFragment[Column] with Span
 
   class Column extends SpanFragment
 
