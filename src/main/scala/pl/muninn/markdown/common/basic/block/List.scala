@@ -9,24 +9,27 @@ import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 
-//TODO add levels
-//TODO handle generating string with number on start of list
 case class List(listType: List.ListType) extends ListFragment
 
 object List:
 
-  trait ListFragment extends MarkdownFragment[ListElement] with Block
+  trait ListFragment extends MarkdownFragment[ListElement] with Block {
+    def listType: ListType
+  }
 
-  class ListElement extends SpanFragment
+  case class ListElement(level: ListLevel) extends SpanFragment
+
+  case class ListLevel(value: Int) extends AnyVal
 
   enum ListType:
     case Ordered, Unordered
 
-  type ListContextFn = ListFragment ?=> ListElement
+  type ListContextFn = (ListFragment, ListLevel) ?=> ListElement
 
   def createListPartialContext(list: List, init: ListContextFn): List =
     given fragment: ListFragment = list
-    init(using fragment)
+    given level: ListLevel       = ListLevel(0)
+    init(using fragment, level)
     list
 
   object Partial:
@@ -34,7 +37,8 @@ object List:
 
     def ol(init: ListContextFn)(using configuration: Configuration): List = createListPartialContext(List(ListType.Ordered), init)
 
-    def li(init: SpanContextFn)(using list: ListFragment, configuration: Configuration): ListElement = createSpanPartialContext(ListElement(), init)
+    def li(level: ListLevel)(init: SpanContextFn)(using list: ListFragment, configuration: Configuration): ListElement =
+      createSpanPartialContext(ListElement(level), init)
 
   end Partial
 
@@ -46,8 +50,15 @@ object List:
 
   def add(nodes: ListElement*)(using list: ListFragment, configuration: Configuration) = list.addMany(nodes)
 
-  def li(init: SpanContextFn)(using list: ListFragment, configuration: Configuration) = list += Partial.li(init)
+  def li(init: SpanContextFn)(using list: ListFragment, level: ListLevel, configuration: Configuration) = list += Partial.li(level)(init)
 
+  def nested(init: ListContextFn)(using list: ListFragment, level: ListLevel, configuration: Configuration) =
+    given fragment: ListFragment   = list
+    given nextListLevel: ListLevel = level.copy(value = level.value + 1)
+    init(using fragment, nextListLevel)
+
+  // TODO handle generating string with number on start of list
+  // TODO handle rendering levels
   def print(list: List, printBodyF: MarkdownNode => String): String =
     val bodies = list.values.map(printBodyF)
     bodies.zipWithIndex

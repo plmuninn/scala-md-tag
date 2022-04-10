@@ -24,7 +24,7 @@ trait ContextBasicMarkdown:
   export Italic.i
   export Link.a
   export Strikethrough.s
-  export List.{ul, ol, li, add}
+  export List.{ul, ol, li, nested, add}
   export Table.{table, tableAligned, headers, header, row, col, add}
 
 end ContextBasicMarkdown

@@ -20,36 +20,36 @@ def Main(args: String*): Unit =
 //
 ////    println(printUnsafe(otherMd))
 //
-  val m = md {
-    val title = h1(i(m"test")).partial
-    add(title)
-    hr
-    b {
-      "test"
-    }
-    p(m"test1")
-    p(m"test2")
-    b("test3")
-    br
-    p {
-      b(m"test4")
-      ul {
-        li("test")
-        li("test")
-        li("test")
-//        li {
-//          m"test"
-//          ul {
-//            li("test")
-//          }
-//        }
-      }
-    }
-    ul {
-      li(m"test")
-      li(m"test2")
-    }
-  }
+//  val m = md {
+//    val title = h1(i(m"test")).partial
+//    add(title)
+//    hr
+//    b {
+//      "test"
+//    }
+//    p(m"test1")
+//    p(m"test2")
+//    b("test3")
+//    br
+//    p {
+//      b(m"test4")
+//      ul {
+//        li("test")
+//        li("test")
+//        li("test")
+////        li {
+////          m"test"
+////          ul {
+////            li("test")
+////          }
+////        }
+//      }
+//    }
+//    ul {
+//      li(m"test")
+//      li(m"test2")
+//    }
+//  }
 
 //  print(generateGraphUnsafe(otherMd))
 //  print(generateGraphUnsafe(m))
@@ -58,23 +58,39 @@ def Main(args: String*): Unit =
 //  print(generateUnsafe(otherMd))
 
   val listMd = md {
-    table {
-      headers {
-        col(m"")
-      }
-      headers {
-        header(TableAlignment.Left)(m"test")
-        header(TableAlignment.Right)(m"test")
-        header(TableAlignment.Center)(m"test")
-      }
-      row {
-        col(m"test")
-        col(m"test")
-        col(m"test")
+    ul {
+      li("test")
+      li("test")
+      nested {
+        li("test")
+        li("test")
+        li("test")
       }
     }
   }
 
   print(generateGraphUnsafe(listMd))
+//  print(generateUnsafe(listMd))
+
+//  val tableMd = md {
+//    table {
+//      headers {
+//        col(m"")
+//      }
+//      headers {
+//        header(TableAlignment.Left)(m"test")
+//        header(TableAlignment.Right)(m"test")
+//        header(TableAlignment.Center)(m"test")
+//      }
+//      row {
+//        col(m"test")
+//        col(m"test")
+//        col(m"test")
+//      }
+//    }
+//  }
+//
+//  print(generateGraphUnsafe(tableMd))
+//  print(generateUnsafe(tableMd))
 
 end Main

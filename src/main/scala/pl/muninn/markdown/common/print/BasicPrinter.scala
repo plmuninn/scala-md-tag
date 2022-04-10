@@ -2,9 +2,7 @@ package pl.muninn.markdown.common.print
 
 import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, BlockWithSpanFragment, MarkdownDocument, SpanFragment}
 import pl.muninn.markdown.common.{MarkdownFragment, MarkdownNode}
-import pl.muninn.markdown.common.basic.block
-import pl.muninn.markdown.common.basic.block.List.ListElement
-import pl.muninn.markdown.common.basic.block.{Blockquotes, BreakLine, CodeBlock, Heading, HorizontalLine, Paragraph, Table, *}
+import pl.muninn.markdown.common.basic.block.*
 import pl.muninn.markdown.common.basic.span.*
 
 import scala.util.Try
@@ -29,7 +27,7 @@ object BasicPrinter extends MarkdownPrinter:
       case (None, node: Code)                   => Code.print(node)
       case (None, node: Image)                  => Image.print(node)
       case (None, node: Link)                   => Link.print(node)
-      case (None, node: block.List)             => List.print(node, printNode)
+      case (None, node: List)                   => List.print(node, printNode)
       case (None, node: CodeBlock)              => CodeBlock.print(node)
       case (None, node: Table)                  => Table.print(node, printNode)
       case (Some(body), node: Blockquotes)      => Blockquotes.print(body)
