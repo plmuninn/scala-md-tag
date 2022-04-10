@@ -14,8 +14,9 @@ import pl.muninn.markdown.common.print.{BasicPrinter, GenerateGraph, GenerateMar
 trait Markdown extends GenerateGraph with GenerateMarkdown:
 
   export pl.muninn.markdown.common.MarkdownStringContext.TextOps
+  export Configuration.*
 
-  given Configuration = Configuration.DefaultConfiguration
+  given Configuration = Configuration.DefaultConfiguration()
 
   override def generate[T <: MarkdownNode](markdown: T): Either[Throwable, String] = BasicPrinter.generate(markdown)
 

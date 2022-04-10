@@ -19,7 +19,7 @@ trait PartialBasicMarkdown:
   export Heading.Partial.*
   export List.Partial.*
   export Paragraph.Partial.*
-//  export Table.Partial.*
+  export Table.Partial.*
 
 end PartialBasicMarkdown
 

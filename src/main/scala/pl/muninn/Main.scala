@@ -3,11 +3,12 @@ package pl.muninn
 import pl.muninn.markdown.common.Configuration.DefaultConfiguration
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
+import pl.muninn.markdown.common.basic.block.Table.TableAlignment
 
 @main
 def Main(args: String*): Unit =
 
-  given Configuration = DefaultConfiguration.notSafeInserting.notEscapingLiterals
+  given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(true)
 
 //  val title = partial.h1(m"test")
 //
@@ -51,26 +52,29 @@ def Main(args: String*): Unit =
   }
 
 //  print(generateGraphUnsafe(otherMd))
-  print(generateGraphUnsafe(m))
+//  print(generateGraphUnsafe(m))
 
 //  print(generateUnsafe(m))
 //  print(generateUnsafe(otherMd))
 
-//  val listMd = md {
-//    p {
-//      b(m"test4")
-//      ul {
-//        li("test")
-//        li("test")
-//        ul {
-//          li("test")
-//          li("test")
-//          li("test")
-//        }
-//      }
-//    }
-//  }
+  val listMd = md {
+    table {
+      headers {
+        col(m"")
+      }
+      headers {
+        header(TableAlignment.Left)(m"test")
+        header(TableAlignment.Right)(m"test")
+        header(TableAlignment.Center)(m"test")
+      }
+      row {
+        col(m"test")
+        col(m"test")
+        col(m"test")
+      }
+    }
+  }
 
-//  print(generateGraphUnsafe(listMd))
+  print(generateGraphUnsafe(listMd))
 
 end Main

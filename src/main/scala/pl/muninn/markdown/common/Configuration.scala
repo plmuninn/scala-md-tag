@@ -3,19 +3,16 @@ package pl.muninn.markdown.common
 import pl.muninn.markdown.common.Configuration
 
 trait Configuration:
-  val shouldEscapeLiterals: Boolean = true
-  val safeInserting: Boolean        = true
+  def shouldEscapeLiterals: Boolean
+  def safeInserting: Boolean
+  def tableStrictPrinting: Boolean
 
 object Configuration:
-  extension (conf: Configuration)
-    def notSafeInserting: Configuration = new Configuration {
-      override val shouldEscapeLiterals: Boolean = conf.shouldEscapeLiterals
-      override val safeInserting: Boolean        = false
-    }
+  extension (conf: DefaultConfiguration)
+    def withEscapeLiterals(shouldEscapeLiterals: Boolean)                              = conf.copy(shouldEscapeLiterals = shouldEscapeLiterals)
+  extension (conf: DefaultConfiguration) def withSafeInserting(safeInserting: Boolean) = conf.copy(safeInserting = safeInserting)
+  extension (conf: DefaultConfiguration)
+    def withTableStrictPrinting(tableStrictPrinting: Boolean) = conf.copy(tableStrictPrinting = tableStrictPrinting)
 
-    def notEscapingLiterals: Configuration = new Configuration {
-      override val shouldEscapeLiterals: Boolean = false
-      override val safeInserting: Boolean        = conf.safeInserting
-    }
-
-  case object DefaultConfiguration extends Configuration
+  case class DefaultConfiguration(shouldEscapeLiterals: Boolean = true, safeInserting: Boolean = true, tableStrictPrinting: Boolean = false)
+      extends Configuration

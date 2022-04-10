@@ -15,19 +15,19 @@ case class List(listType: List.ListType) extends ListFragment
 
 object List:
 
-  type ListContextFn = ListFragment ?=> ListElement
-
-  def createListPartialContext(list: List, init: ListContextFn): List =
-    given fragment: ListFragment = list
-    init(using fragment)
-    list
-
   trait ListFragment extends MarkdownFragment[ListElement] with Block
 
   class ListElement extends SpanFragment
 
   enum ListType:
     case Ordered, Unordered
+
+  type ListContextFn = ListFragment ?=> ListElement
+
+  def createListPartialContext(list: List, init: ListContextFn): List =
+    given fragment: ListFragment = list
+    init(using fragment)
+    list
 
   object Partial:
     def ul(init: ListContextFn)(using configuration: Configuration): List = createListPartialContext(List(ListType.Unordered), init)

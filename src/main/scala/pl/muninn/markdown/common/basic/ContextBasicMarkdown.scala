@@ -25,7 +25,7 @@ trait ContextBasicMarkdown:
   export Link.a
   export Strikethrough.s
   export List.{ul, ol, li, add}
-//  export Table.{table, header, row, col, add}
+  export Table.{table, tableAligned, headers, header, row, col, add}
 
 end ContextBasicMarkdown
 
