@@ -57,42 +57,43 @@ def Main(args: String*): Unit =
 //  print(generateUnsafe(m))
 //  print(generateUnsafe(otherMd))
 
-  val listMd = md {
-    ol {
-      li("test1")
-      li("test2")
-      nested {
-        li("test3")
-        li("test4")
-        nested {
-          li("test5")
-        }
-      }
-    }
-  }
-
-//  print(generateGraphUnsafe(listMd))
-  print(generateUnsafe(listMd))
-
-//  val tableMd = md {
-//    table {
-//      headers {
-//        col(m"")
-//      }
-//      headers {
-//        header(TableAlignment.Left)(m"test")
-//        header(TableAlignment.Right)(m"test")
-//        header(TableAlignment.Center)(m"test")
-//      }
-//      row {
-//        col(m"test")
-//        col(m"test")
-//        col(m"test")
+//  val listMd = md {
+//    ul {
+//      li("123. test")
+//      li("test2")
+//      nested {
+//        li("test3")
+//        li("test4")
+//        nested {
+//          li("test5")
+//        }
 //      }
 //    }
 //  }
 
+//  print(generateGraphUnsafe(listMd))
+//  print(generateUnsafe(listMd))
+
+  val tableMd = md {
+    table {
+      headers {
+        col(m"")
+      }
+      headers {
+        header(TableAlignment.Left)(m"test")
+        header(TableAlignment.Right)(m"test")
+        header(TableAlignment.Center)(m"test")
+      }
+      row {
+        col(m"test")
+        col(m"test")
+        col(m"test")
+        col(m"test")
+      }
+    }
+  }
+
 //  print(generateGraphUnsafe(tableMd))
-//  print(generateUnsafe(tableMd))
+  print(generateUnsafe(tableMd))
 
 end Main

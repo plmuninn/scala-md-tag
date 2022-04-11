@@ -6,6 +6,9 @@ import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.block.Table.{TableAlignment, TableFragment}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
+import scala.collection.mutable.ArrayBuffer
+import scala.util.Try
+
 case class Table(defaultAlignment: Option[TableAlignment], strictPrinting: Boolean) extends TableFragment
 
 object Table:
@@ -105,4 +108,25 @@ object Table:
   def add(nodes: Column*)(using md: Row, configuration: Configuration) = md.addMany(nodes)
 
   // TODO me
-  def print(node: Table, printBodyF: MarkdownNode => String): String = ???
+  def print(node: Table, printBodyF: MarkdownNode => String): String =
+    val headers: Option[Headers]                      = node.values.collectFirst { case headers: Headers => headers }
+    val headersColumns: ArrayBuffer[Header]           = headers.map(_.values.collect({ case header: Header => header })).getOrElse(ArrayBuffer.empty)
+    val rows                                          = node.values.collect({ case row: Row => row })
+    val rowsColumns: ArrayBuffer[ArrayBuffer[Column]] = rows.map(_.values.collect({ case column: Column => column }))
+    val longestRow: Int                               = Try(rowsColumns.map(_.size).max).getOrElse(0)
+    val rowSizesEqual: Boolean                        = rowsColumns.map(_.size).distinct.size == 1
+
+    if node.strictPrinting &&
+      (headersColumns.isEmpty ||
+        headersColumns.size != longestRow ||
+        rowsColumns.isEmpty ||
+        !rowSizesEqual)
+    then throw new RuntimeException("Table is not meeting criteria of strict printing")
+
+    val headersBody: ArrayBuffer[String]                  = headersColumns.map(printBodyF)
+    val rowsColumnsBody: ArrayBuffer[ArrayBuffer[String]] = rowsColumns.map(columns => columns.map(column => printBodyF(column)))
+    val longestCell: Int                                  = (headersBody.map(_.length) ++ rowsColumnsBody.flatMap(_.map(_.length))).max
+
+    ""
+//    val longestHeaders =
+  end print

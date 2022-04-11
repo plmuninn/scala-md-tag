@@ -38,6 +38,7 @@ object BasicPrinter extends MarkdownPrinter:
       case (Some(body), node: Strikethrough)    => Strikethrough.print(body)
       case (Some(body), node: List.ListElement) => body
       case (Some(body), node: TextFragment)     => body
+      case (Some(body), node: Table.Header)     => body
       case (Some(body), node: Table.Column)     => body
       case (maybeBody, node: MarkdownDocument)  => maybeBody.getOrElse("")
       case (maybeBody, node)                    => throw new RuntimeException(s"Node $node unsupported with body $maybeBody")
