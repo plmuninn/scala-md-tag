@@ -12,6 +12,7 @@ trait ContextBasicMarkdown:
 
   export ContextBasicMarkdown.add
   export Text.text
+  export TextFragment.div
   export Blockquotes.blockquotes
   export BreakLine.br
   export HorizontalLine.hr

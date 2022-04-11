@@ -13,6 +13,7 @@ trait PartialBasicMarkdown:
   export Link.Partial.*
   export Strikethrough.Partial.*
   export Text.Partial.*
+  export TextFragment.Partial.*
   export Blockquotes.Partial.*
   export BreakLine.Partial.*
   export CodeBlock.Partial.*
