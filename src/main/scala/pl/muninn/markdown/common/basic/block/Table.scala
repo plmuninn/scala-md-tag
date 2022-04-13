@@ -113,12 +113,13 @@ object Table:
     val headersColumns: ArrayBuffer[Header]           = headers.map(_.values.collect({ case header: Header => header })).getOrElse(ArrayBuffer.empty)
     val rows                                          = node.values.collect({ case row: Row => row })
     val rowsColumns: ArrayBuffer[ArrayBuffer[Column]] = rows.map(_.values.collect({ case column: Column => column }))
-    val longestRow: Int                               = Try(rowsColumns.map(_.size).max).getOrElse(0)
+    val longestColumnRow: Int                         = Try(rowsColumns.map(_.size).max).getOrElse(0)
+    val longestRow: Int                               = Array(longestColumnRow, headersColumns.size).max
     val rowSizesEqual: Boolean                        = rowsColumns.map(_.size).distinct.size == 1
 
     if node.strictPrinting &&
       (headersColumns.isEmpty ||
-        headersColumns.size != longestRow ||
+        headersColumns.size != longestColumnRow ||
         rowsColumns.isEmpty ||
         !rowSizesEqual)
     then throw new RuntimeException("Table is not meeting criteria of strict printing")
@@ -129,12 +130,12 @@ object Table:
     val missingCellValue: String                          = " " * longestCell
     val missingAlignmentValue: String                     = "-" * longestCell
 
-    if headersBody.size < longestRow then (headersBody.size to longestRow).foreach(_ => headersBody.addOne(missingCellValue))
+    if headersBody.size < longestRow then (headersBody.size until longestRow).foreach(_ => headersBody.addOne(missingCellValue))
 
     rowsColumnsBody.map { row =>
       val valuesToAdd: ArrayBuffer[String] =
         if row.size < longestRow then
-          (row.size to longestRow).foldLeft(ArrayBuffer.empty) { case (acc, _) =>
+          (row.size until longestRow).foldLeft(ArrayBuffer.empty) { case (acc, _) =>
             acc.addOne(missingCellValue)
           }
         else ArrayBuffer.empty
@@ -154,7 +155,7 @@ object Table:
         case _                           => missingAlignmentValue                 // ----
 
     val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment)).map(renderAlignment)
-    if alignments.size < longestRow then (alignments.size to longestRow).foreach(_ => alignments.addOne(missingAlignmentValue))
+    if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(missingAlignmentValue))
 
     def renderRow(cells: Iterable[String]): String = "| " + cells.mkString(" | ") + " |"
 

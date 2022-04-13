@@ -8,7 +8,7 @@ import pl.muninn.markdown.common.basic.block.Table.TableAlignment
 @main
 def Main(args: String*): Unit =
 
-  given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(true)
+  given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
 
 //  val title = partial.h1(m"test")
 //
@@ -77,17 +77,15 @@ def Main(args: String*): Unit =
   val tableMd = md {
     table {
       headers {
-        col(m"")
-      }
-      headers {
         header(TableAlignment.Left)(m"test")
         header(TableAlignment.Right)(m"test")
-        header(TableAlignment.Center)(m"test")
       }
       row {
         col(m"test")
         col(m"test")
         col(m"test")
+      }
+      row {
         col(m"test")
       }
     }
