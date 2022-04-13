@@ -20,7 +20,7 @@ object Table:
 
   class Headers extends MarkdownFragment[Header] with Span
 
-  class Header(alignment: Option[TableAlignment]) extends SpanFragment
+  case class Header(alignment: Option[TableAlignment]) extends SpanFragment
 
   class Row extends MarkdownFragment[Column] with Span
 
@@ -126,7 +126,41 @@ object Table:
     val headersBody: ArrayBuffer[String]                  = headersColumns.map(printBodyF)
     val rowsColumnsBody: ArrayBuffer[ArrayBuffer[String]] = rowsColumns.map(columns => columns.map(column => printBodyF(column)))
     val longestCell: Int                                  = (headersBody.map(_.length) ++ rowsColumnsBody.flatMap(_.map(_.length))).max
+    val missingCellValue: String                          = " " * longestCell
+    val missingAlignmentValue: String                     = "-" * longestCell
 
-    ""
-//    val longestHeaders =
+    if headersBody.size < longestRow then (headersBody.size to longestRow).foreach(_ => headersBody.addOne(missingCellValue))
+
+    rowsColumnsBody.map { row =>
+      val valuesToAdd: ArrayBuffer[String] =
+        if row.size < longestRow then
+          (row.size to longestRow).foldLeft(ArrayBuffer.empty) { case (acc, _) =>
+            acc.addOne(missingCellValue)
+          }
+        else ArrayBuffer.empty
+      row.addAll(valuesToAdd)
+    }
+
+    def resizeBody(value: String): String = if value.length == longestCell then value else value + " " * (longestCell - value.length)
+
+    val resizedHeadersBody     = headersBody.map(resizeBody)
+    val resizedRowsColumnsBody = rowsColumnsBody.map(_.map(resizeBody))
+
+    def renderAlignment(alignment: Option[TableAlignment]): String =
+      alignment match
+        case Some(TableAlignment.Left)   => ":" + "-" * (longestCell - 1)         // :---
+        case Some(TableAlignment.Center) => ":" + ("-" * (longestCell - 2)) + ":" // :---:
+        case Some(TableAlignment.Right)  => "-" * (longestCell - 1) + ":"         // ---:
+        case _                           => missingAlignmentValue                 // ----
+
+    val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment)).map(renderAlignment)
+    if alignments.size < longestRow then (alignments.size to longestRow).foreach(_ => alignments.addOne(missingAlignmentValue))
+
+    def renderRow(cells: Iterable[String]): String = "| " + cells.mkString(" | ") + " |"
+
+    val renderedHeaders    = renderRow(resizedHeadersBody)
+    val renderedAlignments = renderRow(alignments)
+    val renderedRows       = resizedRowsColumnsBody.map(renderRow).mkString("\n")
+
+    Array(renderedHeaders, renderedAlignments, renderedRows).mkString("\n")
   end print
