@@ -3,16 +3,16 @@ package pl.muninn.markdown.common.basic.block
 import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, createSpanPartialContext}
 import pl.muninn.markdown.common.MarkdownFragment.{BlockFragment, SpanFragment}
 import pl.muninn.markdown.common.MarkdownNode.Span
-import pl.muninn.markdown.common.basic.block.Table.{TableAlignment, TableFragment}
+import pl.muninn.markdown.common.basic.block.Table.{ColumnAlignment, TableFragment}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Try
 
-case class Table(defaultAlignment: Option[TableAlignment], strictPrinting: Boolean) extends TableFragment
+case class Table(defaultAlignment: Option[ColumnAlignment], strictPrinting: Boolean) extends TableFragment
 
 object Table:
-  extension (table: Table) def withAlignment(alignment: TableAlignment) = table.copy(defaultAlignment = Some(alignment))
+  extension (table: Table) def withAlignment(alignment: ColumnAlignment) = table.copy(defaultAlignment = Some(alignment))
 
   trait TableFragment extends MarkdownFragment[TableElement] with Span
 
@@ -20,13 +20,13 @@ object Table:
 
   class Headers extends MarkdownFragment[Header] with Span
 
-  case class Header(alignment: Option[TableAlignment]) extends SpanFragment
+  case class Header(alignment: Option[ColumnAlignment]) extends SpanFragment
 
   class Row extends MarkdownFragment[Column] with Span
 
   class Column extends SpanFragment
 
-  enum TableAlignment:
+  enum ColumnAlignment:
     case Left, Right, Center
 
   type TableContextFn  = TableFragment ?=> TableElement
@@ -50,14 +50,14 @@ object Table:
 
   object Partial:
 
-    def table(defaultAlignment: Option[TableAlignment], init: TableContextFn)(using configuration: Configuration): Table =
+    def table(defaultAlignment: Option[ColumnAlignment], init: TableContextFn)(using configuration: Configuration): Table =
       createTablePartialContext(Table(defaultAlignment, strictPrinting = configuration.tableStrictPrinting), init)
 
     def table(init: TableContextFn)(using configuration: Configuration): Table = table(None, init)
 
     def headers(init: HeaderContextFn): TableElement = createHeaderPartialContext(Headers(), init)
 
-    def header(alignment: Option[TableAlignment], init: SpanContextFn)(using configuration: Configuration): Header =
+    def header(alignment: Option[ColumnAlignment], init: SpanContextFn)(using configuration: Configuration): Header =
       createSpanPartialContext(Header(alignment), init)
 
     def header(init: SpanContextFn)(using configuration: Configuration): Header = header(None, init)
@@ -70,7 +70,7 @@ object Table:
 
   end Partial
 
-  def tableAligned(defaultAlignment: TableAlignment)(init: TableContextFn)(using md: BlockFragment, configuration: Configuration) =
+  def tableAligned(defaultAlignment: ColumnAlignment)(init: TableContextFn)(using md: BlockFragment, configuration: Configuration) =
     md += Partial.table(Some(defaultAlignment), init)
 
   def table(init: TableContextFn)(using md: BlockFragment, configuration: Configuration) = md += Partial.table(init)
@@ -84,7 +84,7 @@ object Table:
 
   def row(init: RowContextFn)(using md: TableFragment, configuration: Configuration) = md += Partial.row(init)
 
-  def header(alignment: TableAlignment)(init: SpanContextFn)(using md: Headers, configuration: Configuration) =
+  def header(alignment: ColumnAlignment)(init: SpanContextFn)(using md: Headers, configuration: Configuration) =
     md += Partial.header(Some(alignment), init)
 
   def col(init: SpanContextFn)(using md: Row | Headers, configuration: Configuration) =
@@ -107,7 +107,6 @@ object Table:
 
   def add(nodes: Column*)(using md: Row, configuration: Configuration) = md.addMany(nodes)
 
-  // TODO me
   def print(node: Table, printBodyF: MarkdownNode => String): String =
     val headers: Option[Headers]                      = node.values.collectFirst { case headers: Headers => headers }
     val headersColumns: ArrayBuffer[Header]           = headers.map(_.values.collect({ case header: Header => header })).getOrElse(ArrayBuffer.empty)
@@ -147,12 +146,12 @@ object Table:
     val resizedHeadersBody     = headersBody.map(resizeBody)
     val resizedRowsColumnsBody = rowsColumnsBody.map(_.map(resizeBody))
 
-    def renderAlignment(alignment: Option[TableAlignment]): String =
+    def renderAlignment(alignment: Option[ColumnAlignment]): String =
       alignment match
-        case Some(TableAlignment.Left)   => ":" + "-" * (longestCell - 1)         // :---
-        case Some(TableAlignment.Center) => ":" + ("-" * (longestCell - 2)) + ":" // :---:
-        case Some(TableAlignment.Right)  => "-" * (longestCell - 1) + ":"         // ---:
-        case _                           => missingAlignmentValue                 // ----
+        case Some(ColumnAlignment.Left)   => ":" + "-" * (longestCell - 1)         // :---
+        case Some(ColumnAlignment.Center) => ":" + ("-" * (longestCell - 2)) + ":" // :---:
+        case Some(ColumnAlignment.Right)  => "-" * (longestCell - 1) + ":"         // ---:
+        case _                            => missingAlignmentValue                 // ----
 
     val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment)).map(renderAlignment)
     if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(missingAlignmentValue))

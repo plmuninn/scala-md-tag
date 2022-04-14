@@ -8,6 +8,7 @@ import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, StringConversio
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
 import scala.collection.immutable.ListMap
+import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
 case class List(listType: List.ListType) extends ListFragment
@@ -62,17 +63,19 @@ object List:
     val listType                                          = list.listType
     val listElements: ArrayBuffer[ListElement]            = list.values.collect({ case element: ListElement => element })
     val bodiesWithLevel: ArrayBuffer[(ListLevel, String)] = listElements.map(element => (element.level, printBodyF(element)))
-    var index: Int                                        = 1
-    var previousLevel: ListLevel                          = ListLevel(0)
+    val indexLastLevel: mutable.Map[ListLevel, Int]       = mutable.Map(ListLevel(0) -> 1)
     val results = bodiesWithLevel.map { case (level, body) =>
-      if level.value != previousLevel.value then index = 1
-      previousLevel = level
+      val index = indexLastLevel.get(level) match
+        case Some(value) => value
+        case None =>
+          indexLastLevel += (level -> 1)
+          indexLastLevel(level)
 
       val prefix = listType match {
         case ListType.Ordered   => "*"
         case ListType.Unordered => s"$index."
       }
-      index += 1
+      indexLastLevel(level) = index + 1
       val indent   = if level.value == 0 then "" else " " * 3 * level.value
       val safeBody = body.replaceFirst(NUMBER_REGEX.toString(), """$1\\.""")
       s"$indent$prefix $safeBody"
