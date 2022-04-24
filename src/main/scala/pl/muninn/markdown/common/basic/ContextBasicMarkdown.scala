@@ -16,7 +16,7 @@ trait ContextBasicMarkdown:
   export Blockquotes.blockquotes
   export BreakLine.br
   export HorizontalLine.hr
-  export Heading.{h, h1, h2, h3, h4, h5, h6}
+  export Heading.{h, hId, h1, h1Id, h2, h2Id, h3, h3Id, h4, h4Id, h5, h5Id, h6, h6Id}
   export Paragraph.p
   export Bold.b
   export Code.code
