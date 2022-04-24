@@ -20,6 +20,7 @@ trait ContextBasicMarkdown:
   export Paragraph.p
   export Bold.b
   export Code.code
+  export Emphasis.em
   export CodeBlock.codeBlock
   export Image.img
   export Italic.i

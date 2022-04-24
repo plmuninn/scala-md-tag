@@ -28,5 +28,6 @@ trait Markdown extends GenerateGraph with GenerateMarkdown:
 
 end Markdown
 
+// Implementation of https://www.markdownguide.org/extended-syntax/#overview
 object Markdown extends Markdown with ContextBasicMarkdown:
   val partial: PartialBasicMarkdown = PartialBasicMarkdown

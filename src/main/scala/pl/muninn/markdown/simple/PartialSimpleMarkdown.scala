@@ -1,18 +1,15 @@
-package pl.muninn.markdown.common.basic
+package pl.muninn.markdown.simple
 
-import pl.muninn.markdown.common.basic.PartialBasicMarkdown
-import pl.muninn.markdown.common.basic.block.*
+import pl.muninn.markdown.common.basic.block.{Blockquotes, BreakLine, CodeBlock, Heading, List, Paragraph, Table}
 import pl.muninn.markdown.common.basic.span.*
 
-trait PartialBasicMarkdown:
-
+trait PartialSimpleMarkdown:
   export Bold.Partial.*
   export Code.Partial.*
   export Emphasis.Partial.*
   export Image.Partial.*
   export Italic.Partial.*
   export Link.Partial.*
-  export Strikethrough.Partial.*
   export Text.Partial.*
   export TextFragment.Partial.*
   export Blockquotes.Partial.*
@@ -21,8 +18,5 @@ trait PartialBasicMarkdown:
   export Heading.Partial.*
   export List.Partial.*
   export Paragraph.Partial.*
-  export Table.Partial.*
 
-end PartialBasicMarkdown
-
-object PartialBasicMarkdown extends PartialBasicMarkdown
+object PartialSimpleMarkdown extends PartialSimpleMarkdown

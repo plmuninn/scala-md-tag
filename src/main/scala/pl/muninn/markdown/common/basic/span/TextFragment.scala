@@ -4,6 +4,7 @@ import pl.muninn.markdown.common.Configuration
 import pl.muninn.markdown.common.MarkdownContext.{AnyMarkdownFragment, SpanContextFn, createSpanPartialContext}
 import pl.muninn.markdown.common.MarkdownFragment.SpanFragment
 
+// Important - TextFragment is SpanFragment but during rendering is not dividing nodes with " "
 class TextFragment extends SpanFragment
 
 object TextFragment:
