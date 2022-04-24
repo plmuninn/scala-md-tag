@@ -3,7 +3,7 @@ package pl.muninn
 import pl.muninn.markdown.common.Configuration.DefaultConfiguration
 import pl.muninn.markdown.Markdown.{*, given}
 import pl.muninn.markdown.common.Configuration
-import pl.muninn.markdown.common.basic.block.Table.TableAlignment
+import pl.muninn.markdown.common.basic.block.Table.ColumnAlignment
 
 @main
 def Main(args: String*): Unit =
@@ -77,16 +77,19 @@ def Main(args: String*): Unit =
   val tableMd = md {
     table {
       headers {
-        header(TableAlignment.Left)(m"test")
-        header(TableAlignment.Right)(m"test")
+        header(ColumnAlignment.Left)(m"test")
+        header(ColumnAlignment.Center)(m"test")
+        header(ColumnAlignment.Right)(m"test")
       }
       row {
         col(m"test")
-        col(m"test")
+        col(m"test123123123")
+        col(m"test123123123123")
         col(m"test")
       }
       row {
         col(m"test")
+        col(m"test22332")
       }
     }
   }

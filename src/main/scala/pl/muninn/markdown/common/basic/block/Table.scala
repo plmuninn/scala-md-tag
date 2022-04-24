@@ -125,41 +125,77 @@ object Table:
 
     val headersBody: ArrayBuffer[String]                  = headersColumns.map(printBodyF)
     val rowsColumnsBody: ArrayBuffer[ArrayBuffer[String]] = rowsColumns.map(columns => columns.map(column => printBodyF(column)))
-    val longestCell: Int                                  = (headersBody.map(_.length) ++ rowsColumnsBody.flatMap(_.map(_.length))).max
-    val missingCellValue: String                          = " " * longestCell
-    val missingAlignmentValue: String                     = "-" * longestCell
+    // Alignments need's to have minimal values - otherwise some renderings are complaining and not rendering table
+    val minSizeOfAlignments: Map[Int, Int] =
+      headersColumns
+        .map(_.alignment)
+        .map {
+          case Some(_) => 5
+          case None    => 0
+        }
+        .zipWithIndex
+        .toMap
+    val rowLongestRowCells: Map[Int, Int] =
+      rowsColumnsBody
+        .map(_.zipWithIndex)              // Add each column id
+        .addOne(headersBody.zipWithIndex) // Merge rows with headers
+        .flatten
+        .groupMap({ case (_, key) => key })({ case (values, _) => values.length })
+        .map({ case (index, values) => index -> values.addOne(minSizeOfAlignments.getOrElse(index, 0)) }) // Merge with min alignment sizes
+        .view
+        .mapValues(_.max)
+        .toMap
+    def getColumnLongestCell(column: Int): Int = rowLongestRowCells(column)
+    def missingCellValue(column: Int): String  = " " * getColumnLongestCell(column)
 
-    if headersBody.size < longestRow then (headersBody.size until longestRow).foreach(_ => headersBody.addOne(missingCellValue))
+    if headersBody.size < longestRow then (headersBody.size until longestRow).foreach(index => headersBody.addOne(missingCellValue(index)))
 
     rowsColumnsBody.map { row =>
       val valuesToAdd: ArrayBuffer[String] =
         if row.size < longestRow then
-          (row.size until longestRow).foldLeft(ArrayBuffer.empty) { case (acc, _) =>
-            acc.addOne(missingCellValue)
+          (row.size until longestRow).foldLeft(ArrayBuffer.empty) { case (acc, index) =>
+            acc.addOne(missingCellValue(index))
           }
         else ArrayBuffer.empty
       row.addAll(valuesToAdd)
     }
 
-    def resizeBody(value: String): String = if value.length == longestCell then value else value + " " * (longestCell - value.length)
-
-    val resizedHeadersBody     = headersBody.map(resizeBody)
-    val resizedRowsColumnsBody = rowsColumnsBody.map(_.map(resizeBody))
-
-    def renderAlignment(alignment: Option[ColumnAlignment]): String =
+    // Alignments are rendered without spaces that means they are originally missing 2 of length
+    def renderAlignment(alignment: Option[ColumnAlignment], index: Int): String =
+      val longestCell = rowLongestRowCells(index) + 2
       alignment match
         case Some(ColumnAlignment.Left)   => ":" + "-" * (longestCell - 1)         // :---
         case Some(ColumnAlignment.Center) => ":" + ("-" * (longestCell - 2)) + ":" // :---:
         case Some(ColumnAlignment.Right)  => "-" * (longestCell - 1) + ":"         // ---:
-        case _                            => missingAlignmentValue                 // ----
+        case _                            => "-" * longestCell                     // ----
 
-    val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment)).map(renderAlignment)
-    if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(missingAlignmentValue))
+    val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment))
+    if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(None))
+    val columnAlignments: Map[Int, Option[ColumnAlignment]] = alignments.zipWithIndex.map(_.swap).toMap
+    val alignmentsBodies                                    = alignments.zipWithIndex.map(renderAlignment)
 
-    def renderRow(cells: Iterable[String]): String = "| " + cells.mkString(" | ") + " |"
+    def resizeAndAlignBody(value: String, index: Int): String =
+      val alignment = columnAlignments.get(index).flatten
+      if value.length == rowLongestRowCells(index) then value
+      else
+        val missingLength = rowLongestRowCells(index) - value.length
+        alignment match
+          case Some(ColumnAlignment.Right) => (" " * missingLength) + value
+          case Some(ColumnAlignment.Center) =>
+            val leftSpace  = Math.floor(missingLength / 2).toInt
+            val rightSpace = missingLength - leftSpace
+            (" " * leftSpace) + value + (" " * rightSpace)
+          case Some(ColumnAlignment.Left) => value + (" " * missingLength)
+          case None                       => value + (" " * missingLength)
+
+    val resizedHeadersBody: ArrayBuffer[String]                  = headersBody.zipWithIndex.map(resizeAndAlignBody)
+    val resizedRowsColumnsBody: ArrayBuffer[ArrayBuffer[String]] = rowsColumnsBody.map(_.zipWithIndex.map(resizeAndAlignBody))
+
+    def renderRow(cells: Iterable[String]): String        = "| " + cells.mkString(" | ") + " |"
+    def renderAlignments(cells: Iterable[String]): String = "|" + cells.mkString("|") + "|"
 
     val renderedHeaders    = renderRow(resizedHeadersBody)
-    val renderedAlignments = renderRow(alignments)
+    val renderedAlignments = renderAlignments(alignmentsBodies)
     val renderedRows       = resizedRowsColumnsBody.map(renderRow).mkString("\n")
 
     Array(renderedHeaders, renderedAlignments, renderedRows).mkString("\n")
