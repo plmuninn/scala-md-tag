@@ -29,5 +29,12 @@ trait Markdown extends GenerateGraph with GenerateMarkdown:
 end Markdown
 
 // Implementation of https://www.markdownguide.org/extended-syntax/#overview
+// TODO: https://www.markdownguide.org/extended-syntax/#task-lists
+// Without:
+// * https://www.markdownguide.org/extended-syntax/#definition-lists
+// * https://www.markdownguide.org/extended-syntax/#footnotes
+// * https://www.markdownguide.org/extended-syntax/#subscript
+// * https://www.markdownguide.org/extended-syntax/#superscript
+// Those components are not supported because they are not so popular
 object Markdown extends Markdown with ContextBasicMarkdown:
   val partial: PartialBasicMarkdown = PartialBasicMarkdown
