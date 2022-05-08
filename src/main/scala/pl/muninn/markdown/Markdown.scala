@@ -29,7 +29,6 @@ trait Markdown extends GenerateGraph with GenerateMarkdown:
 end Markdown
 
 // Implementation of https://www.markdownguide.org/extended-syntax/#overview
-// TODO: https://www.markdownguide.org/extended-syntax/#task-lists
 // Without:
 // * https://www.markdownguide.org/extended-syntax/#definition-lists
 // * https://www.markdownguide.org/extended-syntax/#footnotes

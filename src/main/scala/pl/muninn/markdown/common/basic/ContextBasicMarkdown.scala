@@ -28,6 +28,7 @@ trait ContextBasicMarkdown:
   export Strikethrough.s
   export List.{ul, ol, li, nested, add}
   export Table.{table, tableAligned, headers, header, row, col, add, setDefaultAlignment}
+  export TaskList.{tasks, task, check, add}
 
 end ContextBasicMarkdown
 

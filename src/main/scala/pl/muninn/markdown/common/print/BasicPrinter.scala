@@ -30,6 +30,7 @@ object BasicPrinter extends MarkdownPrinter:
       case (None, node: List)                   => List.print(node, printNode)
       case (None, node: CodeBlock)              => CodeBlock.print(node)
       case (None, node: Table)                  => Table.print(node, printNode)
+      case (None, node: TaskList)               => TaskList.print(node, printNode)
       case (Some(body), node: Blockquotes)      => Blockquotes.print(body)
       case (Some(body), node: Heading)          => Heading.print(node, body)
       case (Some(body), node: Paragraph)        => Paragraph.print(body)
@@ -40,6 +41,7 @@ object BasicPrinter extends MarkdownPrinter:
       case (Some(body), node: TextFragment)     => body
       case (Some(body), node: Table.Header)     => body
       case (Some(body), node: Table.Column)     => body
+      case (Some(body), node: TaskList.Task)    => body
       case (maybeBody, node: MarkdownDocument)  => maybeBody.getOrElse("")
       case (maybeBody, node)                    => throw new RuntimeException(s"Node $node unsupported with body $maybeBody")
     }
