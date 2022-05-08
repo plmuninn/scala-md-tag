@@ -9,7 +9,7 @@ case class Image(alt: Option[Text], link: Text, title: Option[Text]) extends Spa
 object Image:
 
   object Partial:
-    def img(link: String)(using md: AnyMarkdownFragment, configuration: Configuration): Image = Image(alt = None, link = Text(link), title = None)
+    def img(link: String)(using configuration: Configuration): Image = Image(alt = None, link = Text(link), title = None)
 
     def img(alt: String, link: String)(using configuration: Configuration): Image =
       Image(alt = Some(Text(alt)), link = Text(link), title = None)

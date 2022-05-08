@@ -23,6 +23,7 @@ trait PartialBasicMarkdown:
   export Paragraph.Partial.*
   export Table.Partial.*
   export TaskList.Partial.*
+  export HorizontalLine.Partial.*
 
 end PartialBasicMarkdown
 

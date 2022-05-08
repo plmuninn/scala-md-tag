@@ -133,7 +133,7 @@ object Table:
       headersColumns
         .map(_.alignment)
         .map {
-          case Some(_) => 5
+          case Some(_) => 4
           case None    => 0
         }
         .zipWithIndex

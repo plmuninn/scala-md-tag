@@ -1,6 +1,6 @@
 package pl.muninn.markdown.simple
 
-import pl.muninn.markdown.common.basic.block.{Blockquotes, BreakLine, CodeBlock, Heading, List, Paragraph, Table}
+import pl.muninn.markdown.common.basic.block.{Blockquotes, BreakLine, CodeBlock, Heading, HorizontalLine, List, Paragraph, Table}
 import pl.muninn.markdown.common.basic.span.*
 
 trait PartialSimpleMarkdown:
@@ -18,5 +18,6 @@ trait PartialSimpleMarkdown:
   export Heading.Partial.*
   export List.Partial.*
   export Paragraph.Partial.*
+  export HorizontalLine.Partial.*
 
 object PartialSimpleMarkdown extends PartialSimpleMarkdown

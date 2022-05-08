@@ -11,6 +11,7 @@ import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 
+//TODO: list item should take Block elements - https://www.markdownguide.org/basic-syntax#paragraphs
 case class List(listType: List.ListType) extends ListFragment
 
 object List:

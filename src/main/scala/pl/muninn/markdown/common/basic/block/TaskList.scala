@@ -35,6 +35,8 @@ object TaskList:
 
   def add(task: Task)(using md: TaskListFragment, configuration: Configuration) = md += task
 
+  def add(task: Task*)(using md: TaskListFragment, configuration: Configuration) = md.addMany(task)
+
   def print(node: TaskList, printBodyF: MarkdownNode => String): String =
     val tasks = node.values.collect({ case task: Task => task })
     tasks
