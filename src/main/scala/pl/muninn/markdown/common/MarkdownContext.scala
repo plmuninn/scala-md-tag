@@ -15,26 +15,42 @@ object MarkdownContext:
 
   type SpanContextFn = (SpanFragment | BlockWithSpanFragment, StringConversion) ?=> Span
 
-  def createBlockPartialContext[T <: BlockFragment](value: T, init: BasicContextFn)(using configuration: Configuration): T =
+  type SpanWithParentContextFn[T] = (SpanFragment | BlockWithSpanFragment, T, StringConversion) ?=> Span
+
+  def createBlockPartialContext[T <: BlockFragment](value: T, init: BasicContextFn)(using Configuration): T =
     given fragment: BlockFragment      = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     value
   end createBlockPartialContext
 
-  def createSpanPartialContext[T <: SpanFragment](value: T, init: SpanContextFn)(using configuration: Configuration): T =
+  def createSpanPartialContext[T <: SpanFragment](value: T, init: SpanContextFn)(using Configuration): T =
     given fragment: SpanFragment       = value
     given conversion: StringConversion = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     value
   end createSpanPartialContext
 
-  def createSpanPartialContextForBlock[T <: BlockWithSpanFragment](value: T, init: SpanContextFn)(using configuration: Configuration): T =
+  def createSpanPartialContextForBlock[T <: BlockWithSpanFragment](value: T, init: SpanContextFn)(using Configuration): T =
     given fragment: BlockWithSpanFragment = value
     given conversion: StringConversion    = magneticStringToTextConversion(using fragment)
     init(using fragment, conversion)
     value
   end createSpanPartialContextForBlock
+
+  def createSpanContext[T <: SpanFragment](value: T, init: SpanWithParentContextFn[T])(using Configuration): T =
+    given fragment: SpanFragment       = value
+    given conversion: StringConversion = magneticStringToTextConversion(using fragment)
+    init(using fragment, value, conversion)
+    value
+  end createSpanContext
+
+  def createSpanContextForBlock[T <: BlockWithSpanFragment](value: T, init: SpanWithParentContextFn[T])(using Configuration): T =
+    given fragment: BlockWithSpanFragment = value
+    given conversion: StringConversion    = magneticStringToTextConversion(using fragment)
+    init(using fragment, value, conversion)
+    value
+  end createSpanContextForBlock
 
   def magneticStringToTextConversion(using md: AnyMarkdownFragment, configuration: Configuration): Conversion[String, Text] =
     new Conversion[String, Text]():

@@ -34,10 +34,6 @@ trait MarkdownFragment[T <: MarkdownNode]:
     val index = values.indexOf(element, 0)
     if index != -1 then values.remove(index)
 
-  def modify[A <: T](element: A)(f: A => A): Unit =
-    val index = values.indexOf(element, 0)
-    if index != -1 then values.update(index, f(element))
-
 end MarkdownFragment
 
 object MarkdownFragment:

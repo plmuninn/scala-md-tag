@@ -14,7 +14,7 @@ trait ContextSimpleMarkdown:
   export Blockquotes.blockquotes
   export BreakLine.br
   export HorizontalLine.hr
-  export Heading.{h, h1, h2, h3, h4, h5, h6}
+  export Heading.{h, h1, h2, h3, h4, h5, h6, setLevel}
   export Paragraph.p
   export Bold.b
   export Code.code

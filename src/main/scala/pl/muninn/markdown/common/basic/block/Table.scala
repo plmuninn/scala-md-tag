@@ -9,7 +9,7 @@ import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Try
 
-case class Table(defaultAlignment: Option[ColumnAlignment], strictPrinting: Boolean) extends TableFragment
+case class Table(var defaultAlignment: Option[ColumnAlignment], strictPrinting: Boolean) extends TableFragment
 
 object Table:
   extension (table: Table) def withAlignment(alignment: ColumnAlignment) = table.copy(defaultAlignment = Some(alignment))
@@ -29,13 +29,13 @@ object Table:
   enum ColumnAlignment:
     case Left, Right, Center
 
-  type TableContextFn  = TableFragment ?=> TableElement
+  type TableContextFn  = (TableFragment, Table) ?=> TableElement
   type HeaderContextFn = Headers ?=> SpanFragment
   type RowContextFn    = Row ?=> SpanFragment
 
   def createTablePartialContext(table: Table, init: TableContextFn): Table =
     given fragment: TableFragment = table
-    init(using fragment)
+    init(using fragment, table)
     table
 
   def createHeaderPartialContext(element: Headers, init: HeaderContextFn): TableElement =
@@ -74,6 +74,9 @@ object Table:
     md += Partial.table(Some(defaultAlignment), init)
 
   def table(init: TableContextFn)(using md: BlockFragment, configuration: Configuration) = md += Partial.table(init)
+
+  def setDefaultAlignment(alignment: ColumnAlignment)(using table: Table) =
+    table.defaultAlignment = Some(alignment)
 
   def headers(init: HeaderContextFn)(using md: TableFragment, configuration: Configuration) =
     val previousHeaders = md.values.collectFirst({ case headers: Headers => headers })
@@ -170,7 +173,7 @@ object Table:
         case _                            => "-" * longestCell                     // ----
 
     val alignments = headersColumns.map(_.alignment.orElse(node.defaultAlignment))
-    if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(None))
+    if alignments.size < longestRow then (alignments.size until longestRow).foreach(_ => alignments.addOne(node.defaultAlignment))
     val columnAlignments: Map[Int, Option[ColumnAlignment]] = alignments.zipWithIndex.map(_.swap).toMap
     val alignmentsBodies                                    = alignments.zipWithIndex.map(renderAlignment)
 
