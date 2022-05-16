@@ -10,16 +10,24 @@ def Main(args: String*): Unit =
 
   given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
 
-//  val title = partial.h1(m"test")
-//
-//  val otherMd = md {
-//    add(title)
-//    p(m"huuraay ${b("test")}")
-//    p("test")
-//  }
-//
-////    println(printUnsafe(otherMd))
-//
+  val otherMd = md {
+    h1 {
+      setId("id")
+      m"test"
+    }
+    p(m"huuraay ${b("test")}")
+    p("test")
+    tasks {
+      task {
+        check
+        m"test"
+      }
+      task("test")
+    }
+  }
+
+  println(generateUnsafe(otherMd))
+
 //  val m = md {
 //    val title = h1(i(m"test")).partial
 //    add(title)
@@ -74,27 +82,28 @@ def Main(args: String*): Unit =
 //  print(generateGraphUnsafe(listMd))
 //  print(generateUnsafe(listMd))
 
-  val tableMd = md {
-    table {
-      headers {
-        header(ColumnAlignment.Left)(m"test")
-        header(ColumnAlignment.Center)(m"test")
-        header(ColumnAlignment.Right)(m"test")
-      }
-      row {
-        col(m"test")
-        col(m"test123123123")
-        col(m"test123123123123")
-        col(m"test")
-      }
-      row {
-        col(m"test")
-        col(m"test22332")
-      }
-    }
-  }
+//  val tableMd = md {
+//    table {
+//      setDefaultAlignment(ColumnAlignment.Left)
+//      headers {
+//        header(ColumnAlignment.Left)(m"test")
+//        header(ColumnAlignment.Center)(m"test")
+//        header(ColumnAlignment.Right)(m"test")
+//      }
+//      row {
+//        col(m"test")
+//        col(m"test123123123")
+//        col(m"test123123123123")
+//        col(m"test")
+//      }
+//      row {
+//        col(m"test")
+//        col(m"test22332")
+//      }
+//    }
+//  }
 
 //  print(generateGraphUnsafe(tableMd))
-  print(generateUnsafe(tableMd))
+//  print(generateUnsafe(tableMd))
 
 end Main

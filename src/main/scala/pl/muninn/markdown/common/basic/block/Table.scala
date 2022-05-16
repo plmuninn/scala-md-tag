@@ -20,7 +20,7 @@ object Table:
 
   class Headers extends MarkdownFragment[Header] with Span
 
-  case class Header(alignment: Option[ColumnAlignment]) extends SpanFragment
+  case class Header(var alignment: Option[ColumnAlignment]) extends SpanFragment
 
   class Row extends MarkdownFragment[Column] with Span
 
@@ -84,6 +84,8 @@ object Table:
       case Some(value) => init(using value)
       case None        => md += Partial.headers(init)
     }
+
+  def setAlignment(alignment: ColumnAlignment)(using header: Header) = header.alignment = Some(alignment)
 
   def row(init: RowContextFn)(using md: TableFragment, configuration: Configuration) = md += Partial.row(init)
 
