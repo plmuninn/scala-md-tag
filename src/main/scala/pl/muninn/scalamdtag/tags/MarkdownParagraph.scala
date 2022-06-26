@@ -6,6 +6,6 @@ case class MarkdownParagraph(tags: Iterable[MarkdownTag]) extends BlockMarkdownT
 
 object MarkdownParagraph {
   implicit val renderMarkdownParagraph: Renderer[MarkdownParagraph] = {
-    case paragraph: MarkdownParagraph => '\n' + paragraph.toFragment.rendered + '\n'
+    case paragraph: MarkdownParagraph => "\\n" + paragraph.toFragment.rendered + "\\n"
   }
 }
