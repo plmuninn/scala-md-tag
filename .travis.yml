@@ -3,7 +3,7 @@ scala:
   - 2.13.8
   - 2.12.16
 
-script: sbt ++$TRAVIS SCALA VERSION compile test publishLocal
+script: sbt ++$TRAVIS_SCALA_VERSION compile test publishLocal
 
 cache:
   directories:
