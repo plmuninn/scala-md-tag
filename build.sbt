@@ -20,46 +20,9 @@ val repo = "scala-md-tag"
 
 ThisBuild / scalaVersion := "2.13.8"
 ThisBuild / name := repo
-ThisBuild / version := "0.2.3"
 ThisBuild / crossScalaVersions := Seq(scalaVersion.value, "2.12.16")
 ThisBuild / organization := "pl.muninn"
 ThisBuild / scalacOptions := compilerOptions
-ThisBuild / homepage := Some(url(s"https://github.com/$username/$repo"))
-ThisBuild / licenses += "MIT" -> url(s"https://github.com/$username/$repo/blob/master/LICENSE")
-ThisBuild / developers := List(
-  Developer(
-    id = username,
-    name = "Maciej Romanski",
-    email = "maciej.romanski@o2.pl",
-    url = new URL(s"http://github.com/$username")
-  )
-)
-ThisBuild / scmInfo := Some(ScmInfo(url(s"https://github.com/$username/$repo"), s"git@github.com:$username/$repo.git"))
-ThisBuild / apiURL := Some(url(s"https://$username.github.io/$repo/latest/api/"))
-ThisBuild / publishTo := sonatypePublishToBundle.value
-ThisBuild / publishMavenStyle := true
-ThisBuild / Test / publishArtifact := false
-//   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
-ThisBuild / publishConfiguration := publishConfiguration.value.withOverwrite(true)
-ThisBuild / publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
-ThisBuild / updateOptions := updateOptions.value.withGigahorse(false)
-ThisBuild / releaseCrossBuild := true // true if you cross-build the project for multiple Scala versions
-ThisBuild / releaseProcess := Seq[ReleaseStep](
-  checkSnapshotDependencies,
-  inquireVersions,
-  runClean,
-  runTest,
-  setReleaseVersion,
-  commitReleaseVersion,
-  tagRelease,
-  // For non cross-build projects, use releaseStepCommand("publishSigned")
-  releaseStepCommandAndRemaining("+publishSigned"),
-  releaseStepCommand("sonatypeBundleRelease"),
-  setNextVersion,
-  commitNextVersion,
-  pushChanges,
-  releaseStepTaskAggregated(publishMicrosite)
-)
 
 resolvers ++= Seq(
   Resolver.sonatypeRepo("releases"),
@@ -82,7 +45,7 @@ lazy val root =
       libraryDependencies ++= tests
     )
 
-lazy val documentationSettings = Seq (
+lazy val documentationSettings = Seq(
   mdocVariables := Map(
     "VERSION" -> version.value
   ),
@@ -99,5 +62,42 @@ lazy val documentationSettings = Seq (
 )
 
 lazy val publishSettings = Seq(
+  publishTo := sonatypePublishToBundle.value,
   sonatypeProjectHosting := Some(GitHubHosting(username, repo, "maciej.romanski@o2.pl")),
+  homepage := Some(url(s"https://github.com/$username/$repo")),
+  licenses += "MIT" -> url(s"https://github.com/$username/$repo/blob/master/LICENSE"),
+  developers := List(
+    Developer(
+      id = username,
+      name = "Maciej Romanski",
+      email = "maciej.romanski@o2.pl",
+      url = new URL(s"http://github.com/$username")
+    )
+  ),
+  scmInfo := Some(ScmInfo(url(s"https://github.com/$username/$repo"), s"git@github.com:$username/$repo.git")),
+  apiURL := Some(url(s"https://$username.github.io/$repo/latest/api/")),
+  publishTo := sonatypePublishToBundle.value,
+  publishMavenStyle := true,
+  Test / publishArtifact := false,
+//   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
+  publishConfiguration := publishConfiguration.value.withOverwrite(true),
+  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
+  updateOptions := updateOptions.value.withGigahorse(false),
+  releaseCrossBuild := true, // true if you cross-build the project for multiple Scala versions
+  releaseProcess := Seq[ReleaseStep](
+    checkSnapshotDependencies,
+    inquireVersions,
+    runClean,
+    runTest,
+    setReleaseVersion,
+    commitReleaseVersion,
+    tagRelease,
+    // For non cross-build projects, use releaseStepCommand("publishSigned")
+    releaseStepCommandAndRemaining("+publishSigned"),
+    releaseStepCommand("sonatypeBundleRelease"),
+    setNextVersion,
+    commitNextVersion,
+    pushChanges,
+    releaseStepCommand("publishMicrosite")
+  )
 )
