@@ -24,7 +24,7 @@ object MarkdownFragment {
                   text.take(2) match {
                     case "\n\n" => text
                     case firstTwo =>
-                      if (firstTwo.lastOption.contains('\n') || firstTwo.headOption.contains('\n')) "\\n" + text
+                      if (firstTwo.lastOption.contains('\n') || firstTwo.headOption.contains('\n')) "\n" + text
                       else "\n\n" + text
                   }
                 case _ => text
