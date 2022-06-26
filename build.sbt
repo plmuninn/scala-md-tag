@@ -1,10 +1,6 @@
 import microsites._
-
-name := "scala-md-tag"
-
-version := "0.2.2"
-
-scalaVersion := "2.12.6"
+import xerial.sbt.Sonatype._
+import ReleaseTransformations._
 
 val compilerOptions = Seq(
   "-deprecation",
@@ -16,10 +12,53 @@ val compilerOptions = Seq(
   "-unchecked",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
-  "-Xfuture",
-  "-Ywarn-unused-import",
-  "-Ypartial-unification",
   "-Xfatal-warnings"
+)
+
+val username = "plmuninn"
+val repo = "scala-md-tag"
+
+ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / name := repo
+ThisBuild / version := "0.2.3"
+ThisBuild / crossScalaVersions := Seq(scalaVersion.value, "2.12.16")
+ThisBuild / organization := "pl.muninn"
+ThisBuild / scalacOptions := compilerOptions
+ThisBuild / homepage := Some(url(s"https://github.com/$username/$repo"))
+ThisBuild / licenses += "MIT" -> url(s"https://github.com/$username/$repo/blob/master/LICENSE")
+ThisBuild / developers := List(
+  Developer(
+    id = username,
+    name = "Maciej Romanski",
+    email = "maciej.romanski@o2.pl",
+    url = new URL(s"http://github.com/$username")
+  )
+)
+ThisBuild / scmInfo := Some(ScmInfo(url(s"https://github.com/$username/$repo"), s"git@github.com:$username/$repo.git"))
+ThisBuild / apiURL := Some(url(s"https://$username.github.io/$repo/latest/api/"))
+ThisBuild / publishTo := sonatypePublishToBundle.value
+ThisBuild / publishMavenStyle := true
+ThisBuild / Test / publishArtifact := false
+//   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
+ThisBuild / publishConfiguration := publishConfiguration.value.withOverwrite(true)
+ThisBuild / publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+ThisBuild / updateOptions := updateOptions.value.withGigahorse(false)
+ThisBuild / releaseCrossBuild := true // true if you cross-build the project for multiple Scala versions
+ThisBuild / releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  // For non cross-build projects, use releaseStepCommand("publishSigned")
+  releaseStepCommandAndRemaining("+publishSigned"),
+  releaseStepCommand("sonatypeBundleRelease"),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges,
+  releaseStepTaskAggregated(publishMicrosite)
 )
 
 resolvers ++= Seq(
@@ -27,14 +66,7 @@ resolvers ++= Seq(
   Resolver.sonatypeRepo("snapshots")
 )
 
-val defaultSettings = Seq(
-  version := "0.2.1",
-  scalaVersion := "2.12.6",
-  organization := "pl.muninn",
-  scalacOptions := compilerOptions
-)
-
-val scalaTestVersion = "3.0.5"
+val scalaTestVersion = "3.2.12"
 
 val tests = Seq(
   "org.scalatest" %% "scalatest" % scalaTestVersion % "test"
@@ -43,17 +75,12 @@ val tests = Seq(
 lazy val root =
   (project in file("."))
     .enablePlugins(MicrositesPlugin)
-    .settings(defaultSettings: _*)
     .settings(publishSettings: _*)
     .settings(documentationSettings: _*)
     .settings(
-      name := "scala-md-tag",
-      libraryDependencies ++= tests,
-      sbtVersion := "1.2.3"
+      name := repo,
+      libraryDependencies ++= tests
     )
-
-val username = "OneWebPro"
-val repo = "scala-md-tag"
 
 lazy val documentationSettings = Seq (
   mdocVariables := Map(
@@ -68,29 +95,9 @@ lazy val documentationSettings = Seq (
   micrositeGithubOwner := "plmuninn",
   micrositeGithubRepo := "scala-md-tag",
   micrositeHighlightTheme := "atom-one-light",
-  micrositePushSiteWith := GHPagesPlugin,
-  micrositeCompilingDocsTool := WithMdoc
+  micrositePushSiteWith := GHPagesPlugin
 )
 
 lazy val publishSettings = Seq(
-  homepage := Some(url(s"https://github.com/$username/$repo")),
-  licenses += "MIT" -> url(s"https://github.com/$username/$repo/blob/master/LICENSE"),
-  scmInfo := Some(ScmInfo(url(s"https://github.com/$username/$repo"), s"git@github.com:$username/$repo.git")),
-  apiURL := Some(url(s"https://$username.github.io/$repo/latest/api/")),
-  releasePublishArtifactsAction := PgpKeys.publishSigned.value,
-  developers := List(
-    Developer(
-      id = username,
-      name = "Maciej Romanski",
-      email = "maciej.loki.romanski@gmail.com",
-      url = new URL(s"http://github.com/$username")
-    )
-  ),
-  publishMavenStyle := true,
-  publishArtifact in Test := false,
-  publishTo := Some(if (isSnapshot.value) Opts.resolver.sonatypeSnapshots else Opts.resolver.sonatypeStaging),
-//   Following 2 lines need to get around https://github.com/sbt/sbt/issues/4275
-  publishConfiguration := publishConfiguration.value.withOverwrite(true),
-  publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
-  updateOptions := updateOptions.value.withGigahorse(false)
+  sonatypeProjectHosting := Some(GitHubHosting(username, repo, "maciej.romanski@o2.pl")),
 )

@@ -1,8 +1,9 @@
 language: scala
 scala:
-  - 2.12.6
+  - 2.13.8
+  - 2.12.16
 
-script: sbt ++$TRAVIS_SCALA_VERSION test
+script: sbt ++$TRAVIS_SCALA_VERSION compile test publishLocal
 
 cache:
   directories:

@@ -36,15 +36,15 @@ package object scalamdtag {
 
   def frag(values: Iterable[MarkdownTag]) = MarkdownFragment(values)
 
-  def frag(values: MarkdownTag*): MarkdownTag = frag(values.toIterable)
+  def frag(values: MarkdownTag*): MarkdownTag = frag(values)
 
   def p(values: Iterable[MarkdownTag]) = MarkdownParagraph(values)
 
-  def p(values: MarkdownTag*): MarkdownTag = p(values.toIterable)
+  def p(values: MarkdownTag*): MarkdownTag = p(values)
 
   def markdown(values: Iterable[MarkdownTag]) = MarkdownFragment(values)
 
-  def markdown(values: MarkdownTag*): MarkdownTag = markdown(values.toIterable)
+  def markdown(values: MarkdownTag*): MarkdownTag = markdown(values)
 
   def img(link: String): MarkdownTag = Image(alt = None, link = link, title = None)
 
@@ -62,11 +62,11 @@ package object scalamdtag {
 
   def ul(values: Iterable[MarkdownTag]): MarkdownTag = UnsortedList(values)
 
-  def ul(values: MarkdownTag*): MarkdownTag = ul(values.toIterable)
+  def ul(values: MarkdownTag*): MarkdownTag = ul(values)
 
   def ol(values: Iterable[MarkdownTag]): MarkdownTag = MarkdownList(values)
 
-  def ol(values: MarkdownTag*): MarkdownTag = ol(values.toIterable)
+  def ol(values: MarkdownTag*): MarkdownTag = ol(values)
 
   def table(values: Iterable[MarkdownTag], rows: Iterable[Iterable[MarkdownTag]]) =
     Table(values, rows, None)
@@ -81,17 +81,25 @@ package object scalamdtag {
   ) = Table(values, rows, Some(Right(alignments.toList)))
 
   def table[A <: Product, B <: Product](values: A, rows: Iterable[B]) =
-    Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), None)
+    Table(columns = values.productIterator.toList, rows = rows.map(_.productIterator.toList), alignment = None)
 
   def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignment: TableAlignment.Alignment) =
-    Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), Some(Left(alignment)))
+    Table(
+      columns = values.productIterator.toList,
+      rows = rows.map(_.productIterator.toList),
+      alignment = Some(Left(alignment))
+    )
 
   def table[A <: Product, B <: Product](values: A, rows: Iterable[B], alignments: Iterable[TableAlignment.Alignment]) =
-    Table(values.productIterator.toIterable, rows.map(_.productIterator.toIterable), Some(Right(alignments.toList)))
+    Table(
+      columns = values.productIterator.toList,
+      rows = rows.map(_.productIterator.toList),
+      alignment = Some(Right(alignments.toList))
+    )
 
   def taskList(values: Iterable[Task]) = TaskList(values)
 
-  def taskList(values: Task*): MarkdownTag = taskList(values.toIterable)
+  def taskList(values: Task*): MarkdownTag = taskList(values)
 
   def task(value: TextMarkdownTag) = Task(selected = false, value)
 

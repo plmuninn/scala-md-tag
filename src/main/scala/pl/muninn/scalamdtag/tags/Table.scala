@@ -57,7 +57,7 @@ object Table {
               else {
                 preRenderedRows
                   .foldLeft(Iterable.empty[Int]) {
-                    case (acc, values: Iterable[String]) => acc ++ values.get(index).map(_.length).toIterable
+                    case (acc, values: Iterable[String]) => acc ++ values.get(index).map(_.length).toList
                   }
                   .max
               }
