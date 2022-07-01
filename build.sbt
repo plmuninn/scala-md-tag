@@ -10,9 +10,8 @@ val compilerOptions = Seq(
   "-feature",
   "-language:existentials",
   "-language:higherKinds",
+  "-language:implicitConversions",
   "-unchecked",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
   "-Xfatal-warnings"
 )
 
@@ -55,14 +54,14 @@ lazy val documentationSettings = Seq(
   mdocVariables := Map(
     "VERSION" -> version.value
   ),
-  micrositeName           := "scala-md-tag",
-  micrositeDescription    := "Simple library to generate Markdown Tags",
-  micrositeUrl            := "https://plmuninn.github.io",
-  micrositeBaseUrl        := "/scala-md-tag",
-  micrositeHomepage       := "https://plmuninn.github.io/scala-md-tag/",
+  micrositeName           := repo,
+  micrositeDescription    := "Simple library to generate Markdown",
+  micrositeUrl            := s"https://$username.github.io",
+  micrositeBaseUrl        := s"/$repo",
+  micrositeHomepage       := s"https://$username.github.io/$repo/",
   micrositeAuthor         := "Maciej Romański Muninn Software",
-  micrositeGithubOwner    := "plmuninn",
-  micrositeGithubRepo     := "scala-md-tag",
+  micrositeGithubOwner    := username,
+  micrositeGithubRepo     := repo,
   micrositeHighlightTheme := "atom-one-light",
   micrositePushSiteWith   := GHPagesPlugin
 )
