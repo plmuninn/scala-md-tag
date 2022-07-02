@@ -6,6 +6,8 @@ import pl.muninn.markdown.common.basic.block.TaskList.TaskListFragment
 import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, SpanWithParentContextFn, createSpanContext}
 import pl.muninn.markdown.common.MarkdownNode.Block
 
+import scala.annotation.targetName
+
 class TaskList extends TaskListFragment
 
 object TaskList:
@@ -33,8 +35,10 @@ object TaskList:
 
   def check(using task: Task) = task.checked = true
 
+  @targetName("add_task")
   def add(task: Task)(using md: TaskListFragment, configuration: Configuration) = md += task
 
+  @targetName("add_many_tasks")
   def add(task: Task*)(using md: TaskListFragment, configuration: Configuration) = md.addMany(task)
 
   def print(node: TaskList, printBodyF: MarkdownNode => String): String =

@@ -7,6 +7,7 @@ import pl.muninn.markdown.common.basic.block.List.ListFragment
 import pl.muninn.markdown.common.MarkdownContext.{SpanContextFn, StringConversion, createSpanPartialContext}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
+import scala.annotation.targetName
 import scala.collection.immutable.ListMap
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -47,8 +48,10 @@ object List:
 
   def ol(init: ListContextFn)(using md: BlockFragment, configuration: Configuration) = md += Partial.ol(init)
 
+  @targetName("add_listElement")
   def add(node: ListElement)(using list: ListFragment, configuration: Configuration) = list.add(node)
 
+  @targetName("add_many_ListElements")
   def add(nodes: ListElement*)(using list: ListFragment, configuration: Configuration) = list.addMany(nodes)
 
   def li(init: SpanContextFn)(using list: ListFragment, level: ListLevel, configuration: Configuration) = list += Partial.li(level)(init)

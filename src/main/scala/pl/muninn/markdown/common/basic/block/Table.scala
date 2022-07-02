@@ -6,6 +6,7 @@ import pl.muninn.markdown.common.MarkdownNode.Span
 import pl.muninn.markdown.common.basic.block.Table.{ColumnAlignment, TableFragment}
 import pl.muninn.markdown.common.{Configuration, MarkdownFragment, MarkdownNode}
 
+import scala.annotation.targetName
 import scala.collection.mutable.ArrayBuffer
 import scala.util.Try
 
@@ -98,18 +99,31 @@ object Table:
       case headers: Headers => headers += Partial.header(None, init)
     }
 
+  @targetName("add_headers")
   def add(node: Headers)(using md: TableFragment, configuration: Configuration) = md.add(node)
 
+  @targetName("add_header")
   def add(node: Header)(using md: Headers, configuration: Configuration) = md.add(node)
 
+  @targetName("add_many_headers")
   def add(nodes: Header*)(using md: Headers, configuration: Configuration) = md.addMany(nodes)
 
+  @targetName("add_row")
   def add(node: Row)(using md: TableFragment, configuration: Configuration) = md.add(node)
 
+  @targetName("add_many_rows")
   def add(nodes: Row*)(using md: TableFragment, configuration: Configuration) = md.addMany(nodes)
 
+  @targetName("add_tableElement")
+  def add(node: TableElement)(using md: TableFragment, configuration: Configuration) = md.add(node)
+
+  @targetName("add_many_tableElement")
+  def add(node: TableElement*)(using md: TableFragment, configuration: Configuration) = md.addMany(node)
+
+  @targetName("add_column")
   def add(node: Column)(using md: Row, configuration: Configuration) = md.add(node)
 
+  @targetName("add_many_columns")
   def add(nodes: Column*)(using md: Row, configuration: Configuration) = md.addMany(nodes)
 
   def print(node: Table, printBodyF: MarkdownNode => String): String =

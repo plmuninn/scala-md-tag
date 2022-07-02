@@ -18,7 +18,7 @@ val compilerOptions = Seq(
 val username = "plmuninn"
 val repo     = "scala-md-tag"
 
-ThisBuild / scalaVersion  := "3.1.0"
+ThisBuild / scalaVersion  := "3.1.3"
 ThisBuild / name          := repo
 ThisBuild / organization  := "pl.muninn"
 ThisBuild / scalacOptions := compilerOptions
