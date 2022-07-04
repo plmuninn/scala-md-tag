@@ -1,6 +1,6 @@
 # [Scala markdown tags](https://plmuninn.github.io/scala-md-tag/)
 
-![workflow](https://github.com/plmuninn/scala-md-tag./actions/workflows/ci.yml/badge.svg)
+![workflow](https://github.com/plmuninn/scala-md-tag/actions/workflows/ci.yml/badge.svg)
 
 Simple library to generate Markdown Tags - inspired by [scalatags](https://github.com/lihaoyi/scalatags)  
 It uses plain scala ( **no cats, shapeless etc.** )
