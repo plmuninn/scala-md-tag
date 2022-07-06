@@ -6,13 +6,13 @@ trait Configuration:
   def shouldEscapeLiterals: Boolean
   def safeInserting: Boolean
   def tableStrictPrinting: Boolean
+  def withEscapeLiterals(shouldEscapeLiterals: Boolean): Configuration
+  def withSafeInserting(safeInserting: Boolean): Configuration
+  def withTableStrictPrinting(tableStrictPrinting: Boolean): Configuration
 
 object Configuration:
-  extension (conf: DefaultConfiguration)
-    def withEscapeLiterals(shouldEscapeLiterals: Boolean)                              = conf.copy(shouldEscapeLiterals = shouldEscapeLiterals)
-  extension (conf: DefaultConfiguration) def withSafeInserting(safeInserting: Boolean) = conf.copy(safeInserting = safeInserting)
-  extension (conf: DefaultConfiguration)
-    def withTableStrictPrinting(tableStrictPrinting: Boolean) = conf.copy(tableStrictPrinting = tableStrictPrinting)
-
   case class DefaultConfiguration(shouldEscapeLiterals: Boolean = true, safeInserting: Boolean = true, tableStrictPrinting: Boolean = false)
-      extends Configuration
+      extends Configuration:
+    override def withEscapeLiterals(shouldEscapeLiterals: Boolean): Configuration     = copy(shouldEscapeLiterals = shouldEscapeLiterals)
+    override def withSafeInserting(safeInserting: Boolean): Configuration             = copy(safeInserting = safeInserting)
+    override def withTableStrictPrinting(tableStrictPrinting: Boolean): Configuration = copy(tableStrictPrinting = tableStrictPrinting)

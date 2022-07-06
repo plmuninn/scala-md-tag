@@ -8,7 +8,7 @@ sealed trait MarkdownNode:
 
   def name: String = this.getClass.getSimpleName
 
-  infix def +(value: MarkdownNode): MarkdownNode = value // hack for better composition in context functions
+  infix def +[T <: MarkdownNode](value: T): T = value // hack for better composition in context functions
 end MarkdownNode
 
 object MarkdownNode:

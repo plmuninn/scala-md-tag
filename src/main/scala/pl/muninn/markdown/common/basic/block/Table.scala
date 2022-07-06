@@ -30,7 +30,7 @@ object Table:
   enum ColumnAlignment:
     case Left, Right, Center
 
-  type TableContextFn  = (TableFragment, Table) ?=> TableElement
+  type TableContextFn  = (TableFragment, Table) ?=> TableElement | Iterable[TableElement] | Unit
   type HeaderContextFn = Headers ?=> SpanFragment
   type RowContextFn    = Row ?=> SpanFragment
 

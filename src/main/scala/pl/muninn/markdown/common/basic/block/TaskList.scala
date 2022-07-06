@@ -15,7 +15,7 @@ object TaskList:
 
   case class Task(var checked: Boolean) extends SpanFragment
 
-  type TaskListContextFn = TaskListFragment ?=> Task
+  type TaskListContextFn = TaskListFragment ?=> Task | Iterable[Task] | Unit
   type TaskContextFn     = SpanWithParentContextFn[Task]
 
   def createTaskListPartialContext(list: TaskList, init: TaskListContextFn): TaskList =

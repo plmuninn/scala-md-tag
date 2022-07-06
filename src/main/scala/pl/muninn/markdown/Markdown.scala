@@ -16,7 +16,8 @@ trait Markdown extends GenerateGraph with GenerateMarkdown:
   export pl.muninn.markdown.common.MarkdownStringContext.TextOps
   export Configuration.*
 
-  given Configuration = Configuration.DefaultConfiguration()
+  given Configuration                     = Configuration.DefaultConfiguration()
+  val defaultConfiguration: Configuration = summon[Configuration]
 
   override def generate[T <: MarkdownNode](markdown: T): Either[Throwable, String] = BasicPrinter.generate(markdown)
 
@@ -36,4 +37,5 @@ end Markdown
 // * https://www.markdownguide.org/extended-syntax/#superscript
 // Those components are not supported because they are not so popular
 object Markdown extends Markdown with ContextBasicMarkdown:
+  type MarkdownConfig = Configuration
   val partial: PartialBasicMarkdown = PartialBasicMarkdown

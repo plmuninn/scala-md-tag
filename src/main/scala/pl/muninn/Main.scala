@@ -1,15 +1,11 @@
 package pl.muninn
 
-import pl.muninn.markdown.common.Configuration.DefaultConfiguration
 import pl.muninn.markdown.Markdown.{*, given}
-import pl.muninn.markdown.common.Configuration
-import pl.muninn.markdown.common.MarkdownNode.Span
-import pl.muninn.markdown.common.basic.block.Table.{ColumnAlignment, TableElement}
 
 @main
 def Main(args: String*): Unit =
 
-  given Configuration = DefaultConfiguration().withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
+  given MarkdownConfig = defaultConfiguration.withEscapeLiterals(false).withSafeInserting(false).withTableStrictPrinting(false)
 
 //  val otherMd = md {
 //    h1 {
@@ -107,34 +103,10 @@ def Main(args: String*): Unit =
 //  print(generateGraphUnsafe(tableMd))
 //  print(generateUnsafe(tableMd))
 
-  case class Validator(name: String, forType: Span, compositionUsage: Span, implicitUsage: Span)
-
-  val validators = List(
-    Validator("", partial.text(""), partial.text(""), partial.text(""))
-  )
-
-  def mapValidatorToRow(validator: Validator): TableElement =
-    partial.row {
-      col(text(validator.name))
-      col(add(validator.forType))
-      col(add(validator.compositionUsage))
-      col(add(validator.implicitUsage))
-    }
-
   val markdownPartial = md {
     h1("Validators")
     p {
-      m"Validators provided by library:"
-      br
-      table {
-        headers {
-          col("Name")
-          col("For what type")
-          col("Composition usage")
-          col("Implicit usage")
-        }
-        validators.map(mapValidatorToRow).map(add).last
-      }
+      m"Libraray is build using " + a("cats", "https://typelevel.org/cats/") + m" in version " + b(m"@CATS_VERSION@")
     }
   }
 

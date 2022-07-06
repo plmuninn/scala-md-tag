@@ -26,7 +26,7 @@ object List:
   enum ListType:
     case Ordered, Unordered
 
-  type ListContextFn = (ListFragment, ListLevel) ?=> ListElement
+  type ListContextFn = (ListFragment, ListLevel) ?=> ListElement | Iterable[ListElement] | Unit
 
   def createListPartialContext(list: List, init: ListContextFn): List =
     given fragment: ListFragment = list

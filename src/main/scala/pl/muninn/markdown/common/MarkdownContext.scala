@@ -11,11 +11,11 @@ object MarkdownContext:
 
   type StringConversion = Conversion[String, Text]
 
-  type BasicContextFn = (BlockFragment, StringConversion) ?=> Span | Block
+  type BasicContextFn = (BlockFragment, StringConversion) ?=> Span | Block | Iterable[Span] | Iterable[Block] | Unit
 
-  type SpanContextFn = (SpanFragment | BlockWithSpanFragment, StringConversion) ?=> Span
+  type SpanContextFn = (SpanFragment | BlockWithSpanFragment, StringConversion) ?=> Span | Iterable[Span] | Unit
 
-  type SpanWithParentContextFn[T] = (SpanFragment | BlockWithSpanFragment, T, StringConversion) ?=> Span
+  type SpanWithParentContextFn[T] = (SpanFragment | BlockWithSpanFragment, T, StringConversion) ?=> Span | Iterable[Span] | Unit
 
   def createBlockPartialContext[T <: BlockFragment](value: T, init: BasicContextFn)(using Configuration): T =
     given fragment: BlockFragment      = value

@@ -22,7 +22,8 @@ object Image:
 
   def img(alt: String, link: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Partial.img(alt, link)
 
-  def img(alt: String, link: String, title: String)(using md: AnyMarkdownFragment, configuration: Configuration) = md += Partial.img(alt, link, title)
+  def img(alt: String, link: String, title: String)(using md: AnyMarkdownFragment, configuration: Configuration) =
+    md += Partial.img(alt, link, title)
 
   def print(node: Image): String =
     s"![${node.alt.map(_.value).getOrElse("")}](${node.link.value}${node.title.map(title => s""" "${title.value}"""").getOrElse("")})"

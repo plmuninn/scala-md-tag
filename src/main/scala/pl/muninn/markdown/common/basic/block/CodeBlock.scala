@@ -17,7 +17,8 @@ object CodeBlock:
       CodeBlock(language = None, code = Text.escaped(code, configuration))
   end Partial
 
-  def codeBlock(language: String, code: String)(using md: BlockFragment, configuration: Configuration) = md += Partial.codeBlock(language, code)
+  def codeBlock(language: String, code: String)(using md: BlockFragment, configuration: Configuration) =
+    md += Partial.codeBlock(language, code)
 
   def codeBlock(code: String)(using md: BlockFragment, configuration: Configuration) = md += Partial.codeBlock(code)
 
